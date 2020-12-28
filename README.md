@@ -1,2 +1,3 @@
 # Sqoop-Server
-Sqoop-Server
+
+## 📕 API Specification
