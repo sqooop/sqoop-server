@@ -29,11 +29,7 @@ db.User.hasMany(db.Hashtag, { onDelete: 'cascade' });
 db.Hashtag.belongsTo(db.User);
 
 // 1 : N 관계 Activity : QuestionCard
-db.Activity.hasMany(db.QuestionCard, { onDelete: 'cascade' });
-db.QuestionCard.belongsTo(db.Activity);
-
-// 1 : N 관계 Activity : QuestionCard
-db.Activity.hasMany(db.QuestionCard, { onDelete: 'cascade' });
+db.Activity.hasMany(db.QuestionCard);
 db.QuestionCard.belongsTo(db.Activity);
 
 // M : N 관계 Hashtag  : Activity  => UsedHashtag

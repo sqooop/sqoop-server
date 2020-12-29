@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     star : {
       type: DataTypes.BOOLEAN,
+      defaultValue: 0,
       allowNull: false
     }
   }, {

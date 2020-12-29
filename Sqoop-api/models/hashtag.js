@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(100),
       allowNull: false
     },
+    isJob: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    }
   }, {
     freezeTableName: true,
     timestamps: false
