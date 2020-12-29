@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
     fileUrl: {
       type: DataTypes.STRING(100),
       allowNull: true
+    },
+    star : {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     }
   }, {
     freezeTableName: true,
