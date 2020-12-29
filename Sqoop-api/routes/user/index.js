@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const util = require('../../modules/util');
-const responseMessage = require('../../modules/responseMessage');
-const statusCode = require('../../modules/statusCode');
+const userController = require('../../controller/userController');
 
-router.get('/', (req, res) => {
-  res.status(200).send("User Page");
-})
+router.post('/signup', userController.signup);
+router.post('/signin', userController.signin);
 
 module.exports = router;
