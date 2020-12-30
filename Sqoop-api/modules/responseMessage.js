@@ -48,6 +48,10 @@ module.exports = {
   CREATE_ACTIVITY_SUCCESS: '활동 생성 성공',
   CREATE_ACTIVITY_FAIL: '활동 생성 실패',
 
+  /* 질문 */
+  GET_QUESTION_SUCCESS: '질문 가져오기 성공',
+  GET_QUESTION_FAIL: '질문 가져오기 실패',
+
   /* 질문카드 */
   CREATE_CARD_SUCCESS: '카드 생성 성공',
   CREATE_CARD_FAIL: '카드 생성 실패',
