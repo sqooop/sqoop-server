@@ -44,6 +44,14 @@ module.exports = {
   READ_PROFILE_SUCCESS: "프로필 조회 성공",
   READ_PROFILE_FAIL: "프로필 조회 실패",
 
+  /* 활동 */
+  CREATE_ACTIVITY_SUCCESS: '활동 생성 성공',
+  CREATE_ACTIVITY_FAIL: '활동 생성 실패',
+
+  /* 질문카드 */
+  CREATE_CARD_SUCCESS: '카드 생성 성공',
+  CREATE_CARD_FAIL: '카드 생성 실패',
+
   /* 토큰 */
   EMPTY_TOKEN: '토큰 값이 없습니다.',
   EXPIRED_TOKEN: '토큰 값이 만료되었습니다.',
