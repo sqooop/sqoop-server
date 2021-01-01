@@ -18,22 +18,19 @@ db.Question = require('./question')(sequelize, Sequelize);
 db.Activity = require('./activity')(sequelize, Sequelize);
 db.QuestionCard = require('./questionCard')(sequelize, Sequelize);
 db.Hashtag = require('./hashtag')(sequelize, Sequelize);
-db.UsedHashtag = require('./usedHashtag')(sequelize, Sequelize);
 
 // 1 : N 관계 User : Activity
 db.User.hasMany(db.Activity, { onDelete: 'cascade' });
 db.Activity.belongsTo(db.User);
 
-// 1 : N 관계 User : Hashtag
-db.User.hasMany(db.Hashtag, { onDelete: 'cascade' });
-db.Hashtag.belongsTo(db.User);
-
 // 1 : N 관계 Activity : QuestionCard
 db.Activity.hasMany(db.QuestionCard);
 db.QuestionCard.belongsTo(db.Activity);
 
-// M : N 관계 Hashtag  : Activity  => UsedHashtag
-db.Hashtag.belongsToMany(db.Activity, { through: 'UsedHashtag', as: 'tagged' }); // Hashtag가 봤을때 Activity는 tagged!
-db.Activity.belongsToMany(db.Hashtag, { through: 'UsedHashtag', as: 'tagging' }); // Activity가 봤을때 Hashtag는 tagging!
+// 1 : N 관계 Activity : Hashtag
+db.Activity.hasMany(db.Hashtag);
+db.Hashtag.belongsTo(db.Activity);
+
+db.Hashtag.removeAttribute('id');
 
 module.exports = db;

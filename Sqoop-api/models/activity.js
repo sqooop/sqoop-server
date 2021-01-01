@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(100),
       allowNull: true
     },
+    fileName: {
+      type: DataTypes.STRING(100),
+      allowNull: true
+    },
     star : {
       type: DataTypes.BOOLEAN,
       defaultValue: 0,

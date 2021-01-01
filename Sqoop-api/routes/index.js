@@ -6,6 +6,7 @@ router.use('/user', require('./user'));
 router.use('/hashtag', auth.checkToken, require('./hashtag'));
 router.use('/activity', auth.checkToken, require('./activity'));
 router.use('/card', auth.checkToken, require('./card'));
+router.use('/question', auth.checkToken, require('./question'));
 // router.use('/multer', require('./multer'));
 
 /* GET home page. */

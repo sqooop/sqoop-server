@@ -47,10 +47,20 @@ module.exports = {
   /* 활동 */
   CREATE_ACTIVITY_SUCCESS: '활동 생성 성공',
   CREATE_ACTIVITY_FAIL: '활동 생성 실패',
+  GET_ACTIVITY_SUCCESS: '선택한 활동 가져오기 성공',
+  GET_ACTIVITY_FAIL: '선택한 활동 가져오기 실패',
+
+  /* 질문 */
+  GET_QUESTION_SUCCESS: '질문 가져오기 성공',
+  GET_QUESTION_FAIL: '질문 가져오기 실패',
 
   /* 질문카드 */
   CREATE_CARD_SUCCESS: '카드 생성 성공',
   CREATE_CARD_FAIL: '카드 생성 실패',
+  GET_CARD_SUCCESS: '카드 조회 성공',
+  GET_CARD_FAIL: '카드 조회 실패',
+  UPDATE_CARD_SUCCESS: '카드 수정 성공',
+  UPDATE_CARD_FAIL: '카드 수정 실패',
 
   /* 토큰 */
   EMPTY_TOKEN: '토큰 값이 없습니다.',

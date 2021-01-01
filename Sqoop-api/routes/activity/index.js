@@ -11,6 +11,7 @@ const twoFieldUpload = upload.fields([{
   maxCount: 1
 }]);
 
+router.get('/:ActivityId', activityController.getActivity);
 router.post('/create', twoFieldUpload, activityController.createActivity);
 
 module.exports = router;
