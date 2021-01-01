@@ -5,9 +5,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     number: {
-      type: DataTypes.INTEGER, 
+      type: DataTypes.INTEGER,
       allowNull: false
     },
+    guide: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+
   }, {
     freezeTableName: true,
     timestamps: false
