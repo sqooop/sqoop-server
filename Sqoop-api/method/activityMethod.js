@@ -1,5 +1,5 @@
 const {
-  Activity, UsedHashtag
+  Activity, Hashtag
 } = require('../models');
 
 module.exports = {
@@ -29,24 +29,42 @@ module.exports = {
         UserId
       });
 
-      console.log(jobTag);
-      console.log(skillTag);
+      // for(let tagId of jobTag) {
+      //   await UsedHashtag.create({
+      //     HashtagId: tagId,
+      //     ActivityId: newActivity.id
+      //   });
+      // }
 
-      for(let tagId of jobTag) {
-        await UsedHashtag.create({
-          HashtagId: tagId,
-          ActivityId: newActivity.id
-        });
-      }
-
-      for(let tagId of skillTag) {
-        await UsedHashtag.create({
-          HashtagId: tagId,
-          ActivityId: newActivity.id
-        });
-      }
+      // for(let tagId of skillTag) {
+      //   await UsedHashtag.create({
+      //     HashtagId: tagId,
+      //     ActivityId: newActivity.id
+      //   });
+      // }
 
       return newActivity;
+    } catch (err) {
+      throw err;
+    }
+  },
+  getActivity: async (
+    ActivityId
+  ) => {
+    try {
+      const selectedActivity = await Activity.findOne({
+        where: {
+          id: ActivityId
+        },
+        include: [{
+          model: Hashtag,
+          as:'tagging',
+          attributes: { exclude: ['UserId'] }
+        }],
+      });
+      const jobTag = selectedActivity.tagging.filter( tag => tag.isJob);
+      
+      return jobTag;
     } catch (err) {
       throw err;
     }

@@ -47,6 +47,8 @@ module.exports = {
   /* 활동 */
   CREATE_ACTIVITY_SUCCESS: '활동 생성 성공',
   CREATE_ACTIVITY_FAIL: '활동 생성 실패',
+  GET_ACTIVITY_SUCCESS: '선택한 활동 가져오기 성공',
+  GET_ACTIVITY_FAIL: '선택한 활동 가져오기 실패',
 
   /* 질문 */
   GET_QUESTION_SUCCESS: '질문 가져오기 성공',

@@ -1,3 +1,5 @@
+const { Activity } =  require('./index');
+
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('Hashtag', {
     content: {
