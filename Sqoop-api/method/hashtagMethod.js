@@ -1,13 +1,12 @@
 const { Hashtag } = require('../models');
 
 module.exports = {
-    createHashtag: async (content, UserId, isJob) => {
+    createHashtag: async (hashtagList) => {
         try {
-            const newHashtag = await Hashtag.create({
-                content,
-                UserId,
-                isJob
-            });
+            //hashtagList : actId,content,isJob
+            const newHashtag = await Hashtag.bulkCreate(
+                hashtagList
+            );
             return newHashtag;
         } catch (err) {
             throw err;
