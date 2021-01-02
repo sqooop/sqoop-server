@@ -5,7 +5,6 @@ const activityMethod = require('../method/activityMethod');
 const hashtagMethod = require('../method/hashtagMethod');
 const cardMethod = require('../method/cardMethod');
 const hashtagService = require('./hashtagService');
-const activity = require('../models/activity');
 
 
 module.exports = {
@@ -98,9 +97,26 @@ module.exports = {
   },
   getAllActivity: async (userId, res) => {
     try {
-      const userActivity = await activityMethod.getAllActivity(userId);
-      if (!userActivity) {
+      const rawUserActivity = await activityMethod.getAllActivity(userId);
+      if (!rawUserActivity) {
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_ACTIVITY));
+      }
+      let userActivity = rawUserActivity.map(data => data.get({ plain: true }))
+
+      for (let activityOrder in userActivity) {
+        let jobTag = new Array();
+        let skillTag = new Array();
+        let activity = userActivity[activityOrder];
+        activity.Hashtags.map(hashtag => {
+          if (hashtag.isJob === true) {
+            jobTag.push(hashtag.content);
+          } else {
+            skillTag.push(hashtag.content);
+          }
+        })
+        delete userActivity[activityOrder].Hashtags;
+        userActivity[activityOrder].jobTag = jobTag;
+        userActivity[activityOrder].skillTag = skillTag;
       }
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_ALL_ACTIVITY_SUCCESS, userActivity));
     } catch (err) {
@@ -110,11 +126,28 @@ module.exports = {
   },
   getAllLikeActivity: async (userId, res) => {
     try {
-      const likeActivity = await activityMethod.getAllLikeActivity(userId);
-      if (!likeActivity) {
+      const rawUserLikeActivity = await activityMethod.getAllLikeActivity(userId);
+      if (!rawUserLikeActivity) {
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_ACTIVITY));
       }
-      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_ALL_LIKE_ACTIVITY_SUCCESS, likeActivity));
+      let userLikeActivity = rawUserLikeActivity.map(data => data.get({ plain: true }))
+
+      for (let activityOrder in userLikeActivity) {
+        let jobTag = new Array();
+        let skillTag = new Array();
+        let activity = userLikeActivity[activityOrder];
+        activity.Hashtags.map(hashtag => {
+          if (hashtag.isJob === true) {
+            jobTag.push(hashtag.content);
+          } else {
+            skillTag.push(hashtag.content);
+          }
+        })
+        delete userLikeActivity[activityOrder].Hashtags;
+        userLikeActivity[activityOrder].jobTag = jobTag;
+        userLikeActivity[activityOrder].skillTag = skillTag;
+      }
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_ALL_LIKE_ACTIVITY_SUCCESS, userLikeActivity));
     } catch (err) {
       console.log(err);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_ALL_LIKE_ACTIVITY_FAIL));
