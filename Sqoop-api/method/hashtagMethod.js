@@ -14,6 +14,24 @@ module.exports = {
             throw err;
         }
     },
+
+    getHashtag: async (ActivityIdList) => {
+        try {
+            const userHashtag = Hashtag.findAll({
+                raw: true,
+                where: {
+                    ActivityId: ActivityIdList
+                },
+                attributes: [
+                    'content', 'isJob'
+                ]
+            })
+            return userHashtag;
+        } catch (err) {
+            throw err;
+        },
+
+
     getJobTag: async (ActivityId) => {
         try {
             const selectedJobTag = await Hashtag.findAll({
@@ -52,6 +70,7 @@ module.exports = {
         } catch (err) {
             throw err;
         }
+
     }
     // getUsedHashtag: async (ActivityId) => {
     //     try {

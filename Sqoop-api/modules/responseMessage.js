@@ -83,6 +83,8 @@ module.exports = {
   /* 해시태그 */
   CREATE_HASHTAG_SUCCESS: '해시태그 생성 성공',
   CREATE_HASHTAG_FAIL: '해시태그 생성 실패',
+  GET_HASHTAG_SUCCESS: '해시태그 조회 성공',
+  GET_HASHTAG_FAIL: '해시태그 조회 실패',
 
   /* 서버에러 */
   INTERNAL_SERVER_ERROR: "서버 내부 오류",
