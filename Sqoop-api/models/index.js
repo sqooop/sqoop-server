@@ -5,9 +5,9 @@ const db = {};
 let sequelize;
 
 if (config.use_env_variable) {
- sequelize = new Sequelize(process.env[config.use_env_variable], config);
+    sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
- sequelize = new Sequelize(config.database, config.username, config.password, config);
+    sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 db.sequelize = sequelize;
@@ -31,6 +31,6 @@ db.QuestionCard.belongsTo(db.Activity);
 db.Activity.hasMany(db.Hashtag);
 db.Hashtag.belongsTo(db.Activity);
 
-db.Hashtag.removeAttribute('id');
+// db.Hashtag.removeAttribute('id');
 
 module.exports = db;

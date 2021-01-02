@@ -39,10 +39,28 @@ module.exports = {
 
     return newActivity;
   },
+  likeActivity: async (req, res) => {
+    const { ActivityId } = req.params;
+    const likeActivity = await activityService.likeActivity(ActivityId, res);
+
+    return likeActivity;
+  },
   getActivity: async (req, res) => {
+
     const { ActivityId } = req.params;
     const selectedActivity = await activityService.getActivity(ActivityId, res);
 
     return selectedActivity;
+  },
+  getAllActivity: async (req, res) => {
+
+    const userId = req.decoded.id;
+    const allActivity = await activityService.getAllActivity(userId, res);
+    return allActivity;
+  },
+  getAllLikeActivity: async (req, res) => {
+    const userId = req.decoded.id;
+    const allLikeActivity = await activityService.getAllLikeActivity(userId, res);
+    return allLikeActivity;
   }
 }

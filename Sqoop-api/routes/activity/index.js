@@ -11,7 +11,10 @@ const twoFieldUpload = upload.fields([{
   maxCount: 1
 }]);
 
-router.get('/:ActivityId', activityController.getActivity);
+router.get('/getOneActivity/:ActivityId', activityController.getActivity);
 router.post('/create', twoFieldUpload, activityController.createActivity);
+router.get('/getAllActivity', activityController.getAllActivity);
+router.put('/likeActivity/:ActivityId', activityController.likeActivity);
+router.get('/getLikeActivity', activityController.getAllLikeActivity);
 
 module.exports = router;

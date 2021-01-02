@@ -45,10 +45,19 @@ module.exports = {
   READ_PROFILE_FAIL: "프로필 조회 실패",
 
   /* 활동 */
+  NO_ACTIVITY: '저장된 활동이 없습니다',
   CREATE_ACTIVITY_SUCCESS: '활동 생성 성공',
   CREATE_ACTIVITY_FAIL: '활동 생성 실패',
   GET_ACTIVITY_SUCCESS: '선택한 활동 가져오기 성공',
+  LIKE_ACTIVITY_SUCCESS: '즐겨찾기 추가 및 해제 성공',
+  LIKE_ACTIVITY_FAIL: '즐겨찾기 추가/해제 실패',
+  GET_ALL_ACTIVITY_SUCCESS: '전체 활동 가져오기 성공',
+  GET_ALL_LIKE_ACTIVITY_SUCCESS: '전체 즐겨찾기 가져오기 성공',
   GET_ACTIVITY_FAIL: '선택한 활동 가져오기 실패',
+  GET_ALL_ACTIVITY_FAIL: '전체활동 가져오기 실패',
+  GET_ALL_LIKE_ACTIVITY_FAIL: '전체 즐겨찾기 가져오기 실패',
+
+
 
   /* 질문 */
   GET_QUESTION_SUCCESS: '질문 가져오기 성공',

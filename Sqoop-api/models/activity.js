@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
     summary: {
-      type: DataTypes.STRING(60), 
+      type: DataTypes.STRING(60),
       allowNull: true
     },
     imageUrl: {
@@ -28,11 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(100),
       allowNull: true
     },
-    fileName: {
-      type: DataTypes.STRING(100),
-      allowNull: true
-    },
-    star : {
+    star: {
       type: DataTypes.BOOLEAN,
       defaultValue: 0,
       allowNull: false

@@ -5,21 +5,25 @@ const hashtagMethod = require('../method/hashtagMethod');
 
 
 module.exports = {
-    createHashtag: async (content, UserId, isJob, res) => {
-        if (!content) {
+    createHashtagList: async (jobTag, skillTag) => {
+        if (!jobTag || !skillTag) {
             console.log('필요값 누락');
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
         }
         try {
-            let checkJob = 0;
-            if (isJob) {
-                checkJob = 1;
+            let hashtagList = new Array();
+            for (let job = 0; job < jobTag.length; job++) {
+                let jobData = { content: jobTag[job], isJob: 1 };
+                hashtagList.push(jobData);
             }
-            const createHashtag = await hashtagMethod.createHashtag(content, UserId, checkJob);
-            return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.CREATE_HASHTAG_SUCCESS, { content, UserId, isJob: checkJob }));
+            for (let skill = 0; skill < skillTag.length; skill++) {
+                let skillData = { content: skillTag[skill], isJob: 0 };
+                hashtagList.push(skillData);
+            }
+            return hashtagList;
+
         } catch (err) {
-            console.error(err);
-            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.CREATE_HASHTAG_FAIL));
+            throw err;
         }
     }
 
