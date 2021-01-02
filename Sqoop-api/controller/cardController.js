@@ -8,8 +8,8 @@ module.exports = {
     },
     getCards: async (req, res) => {
         const { ActivityId } = req.params;
-        const cardArr = await cardService.getCards(ActivityId, res);
-        return cardArr; 
+        const questionCards = await cardService.getCards(ActivityId, res);
+        return questionCards; 
     },
     updateCard: async (req, res) => {
         const { number, question, ActivityId, content } = req.body;

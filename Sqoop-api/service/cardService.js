@@ -2,6 +2,8 @@ const util = require('../modules/util');
 const responseMessage = require('../modules/responseMessage');
 const statusCode = require('../modules/statusCode');
 const cardMethod = require('../method/cardMethod');
+const questionMethod = require('../method/questionMethod');
+
 
 
 module.exports = {
@@ -26,8 +28,10 @@ module.exports = {
     }
 
     try {
-      const cardArr = await cardMethod.getCards(ActivityId);
-      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_CARD_SUCCESS, cardArr));
+      const questions = await questionMethod.getQuestions();
+      const questionCards = await cardMethod.getCards(ActivityId);
+
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_CARD_SUCCESS, { questions, questionCards }));
     } catch (err) {
       console.error(err);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_CARD_FAIL));
