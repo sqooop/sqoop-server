@@ -48,6 +48,8 @@ module.exports = {
   NO_ACTIVITY: '저장된 활동이 없습니다',
   CREATE_ACTIVITY_SUCCESS: '활동 생성 성공',
   CREATE_ACTIVITY_FAIL: '활동 생성 실패',
+  UPDATE_ACTIVITY_SUCCESS: '활동 정보 수정 성공',
+  UPDATE_ACTIVITY_FAIL: '활동 정보 수정 실패',
   GET_ACTIVITY_SUCCESS: '선택한 활동 가져오기 성공',
   LIKE_ACTIVITY_SUCCESS: '즐겨찾기 추가 및 해제 성공',
   LIKE_ACTIVITY_FAIL: '즐겨찾기 추가/해제 실패',

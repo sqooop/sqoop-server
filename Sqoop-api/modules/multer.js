@@ -9,7 +9,7 @@ const upload = multer({
         s3,
         bucket: 'sopt-27-osj',
         acl: 'public-read',
-        contentType: multerS3.AUTO_CONTENT_TYPE,
+        contentType: multerS3.AUTO_CONTENT_TYPE, // 이렇게하면 다운로드가 그냥 창이 뜨게!
         key: function (req, file, cb) {
             console.log("original : " + file.originalname);
             console.log("split original : " + file.originalname.split('.').pop());
