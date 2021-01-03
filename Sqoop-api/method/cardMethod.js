@@ -18,14 +18,13 @@ module.exports = {
     },
     getCards: async (ActivityId) => {
         try {
-            const cardArr = await QuestionCard.findAll({
+            const questionCards = await QuestionCard.findAll({
                 attributes: ['number', 'question', 'content'],
                 where: {
                     ActivityId
                 }
             });
-            console.log("length: " + cardArr.length);
-            return cardArr;
+            return questionCards;
         } catch (err) {
             throw err;
         }
@@ -41,7 +40,7 @@ module.exports = {
                     number
                 }
             });
-            return updatedCard;
+            return "질문 카드 수정 완료";
         } catch (err) {
             throw err;
         }

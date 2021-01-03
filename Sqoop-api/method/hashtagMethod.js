@@ -1,4 +1,6 @@
-const { Hashtag } = require('../models');
+const {
+    Hashtag
+} = require('../models');
 
 module.exports = {
     createHashtag: async (hashtagList) => {
@@ -12,6 +14,7 @@ module.exports = {
             throw err;
         }
     },
+
     getHashtag: async (ActivityIdList) => {
         try {
             const userHashtag = Hashtag.findAll({
@@ -24,6 +27,46 @@ module.exports = {
                 ]
             })
             return userHashtag;
+        } catch (err) {
+            throw err;
+        },
+
+
+    getJobTag: async (ActivityId) => {
+        try {
+            const selectedJobTag = await Hashtag.findAll({
+                where: {
+                    ActivityId,
+                    isJob: 1
+                }
+            });
+            return selectedJobTag;
+        } catch (err) {
+            throw err;
+        }
+    },
+    getSkillTag: async (ActivityId) => {
+        try {
+            const selectedSkillTag = await Hashtag.findAll({
+                where: {
+                    ActivityId,
+                    isJob: 0
+                },
+                attributes: [ 'content', 'isJob' ]
+            });
+            return selectedSkillTag;
+        } catch (err) {
+            throw err;
+        }
+    },
+    deleteHashtag: async (ActivityId) => {
+        try {
+            const deleted = await Hashtag.destroy({
+                where: {
+                    ActivityId
+                }
+            });
+            return deleted;
         } catch (err) {
             throw err;
         }

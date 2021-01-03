@@ -14,6 +14,7 @@ module.exports = {
     UserId,
     imageUrl,
     fileUrl,
+    fileName,
     star
   ) => {
     try {
@@ -25,25 +26,44 @@ module.exports = {
         summary,
         imageUrl,
         fileUrl,
+        fileName,
         star,
         UserId
       });
 
-      // for(let tagId of jobTag) {
-      //   await UsedHashtag.create({
-      //     HashtagId: tagId,
-      //     ActivityId: newActivity.id
-      //   });
-      // }
-
-      // for(let tagId of skillTag) {
-      //   await UsedHashtag.create({
-      //     HashtagId: tagId,
-      //     ActivityId: newActivity.id
-      //   });
-      // }
-
       return newActivity;
+    } catch (err) {
+      throw err;
+    }
+  },
+  updateActivity: async (
+    title,
+    startDate,
+    endDate,
+    group,
+    summary,
+    imageUrl,
+    fileUrl,
+    fileName,
+    ActivityId
+  ) => {
+    try {
+      const updatedActivity = await Activity.update({
+        title,
+        startDate,
+        endDate,
+        group,
+        summary,
+        imageUrl,
+        fileUrl,
+        fileName,
+      }, {
+        where: {
+          id: ActivityId
+        }
+      });
+
+      return "활동 정보 수정 완료";
     } catch (err) {
       throw err;
     }
@@ -84,15 +104,9 @@ module.exports = {
         where: {
           id: ActivityId
         },
-        include: [{
-          model: Hashtag,
-          as: 'tagging',
-          attributes: { exclude: ['UserId'] }
-        }],
       });
-      const jobTag = selectedActivity.tagging.filter(tag => tag.isJob);
 
-      return jobTag;
+      return selectedActivity;
     } catch (err) {
       throw err;
     }
