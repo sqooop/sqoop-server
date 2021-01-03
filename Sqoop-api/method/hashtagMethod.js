@@ -29,7 +29,8 @@ module.exports = {
             return userHashtag;
         } catch (err) {
             throw err;
-        },
+        }
+    },
 
 
     getJobTag: async (ActivityId) => {
@@ -52,7 +53,7 @@ module.exports = {
                     ActivityId,
                     isJob: 0
                 },
-                attributes: [ 'content', 'isJob' ]
+                attributes: ['content', 'isJob']
             });
             return selectedSkillTag;
         } catch (err) {
