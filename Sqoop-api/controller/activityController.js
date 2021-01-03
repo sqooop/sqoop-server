@@ -1,3 +1,4 @@
+const activityMethod = require('../method/activityMethod');
 const activityService = require('../service/activityService');
 
 module.exports = {
@@ -62,5 +63,11 @@ module.exports = {
     const userId = req.decoded.id;
     const allLikeActivity = await activityService.getAllLikeActivity(userId, res);
     return allLikeActivity;
+  },
+  getRangeActivity: async (req, res) => {
+    const userId = req.decoded.id;
+    const { startDate, endDate, jobTag, skillTag } = req.query;
+    const rangeActivity = await activityService.getRangeActivity(userId, startDate, endDate, jobTag, skillTag, res);
+    return rangeActivity;
   }
 }

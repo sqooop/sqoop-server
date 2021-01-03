@@ -1,6 +1,8 @@
 const {
   Activity, Hashtag
 } = require('../models');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 module.exports = {
   createActivity: async (
@@ -138,5 +140,57 @@ module.exports = {
       throw err;
     }
   },
+  getPreRangeActivity: async (userId, startDate, endDate, jobTag, skillTag) => {
+    try {
+      const preRangeActivity = await Activity.findAll({
+        where: {
+          UserId: userId,
+          startDate: {
+            [Op.gte]: startDate
+          },
+          endDate: {
+            [Op.lte]: endDate
+          }
+        },
+        attributes: ['id'],
+        include: [{
+          model: Hashtag,
+          where: {
+            [Op.or]: [
+              { [Op.and]: [{ isJob: 1 }, { content: { [Op.in]: jobTag } }] },
+              { [Op.and]: [{ isJob: 0 }, { content: { [Op.in]: skillTag } }] }
+            ]
+          },
+          attributes: ['content', 'isJob']
+        }]
+      });
+      return preRangeActivity;
 
+    } catch (err) {
+      throw err;
+    }
+  },
+  getRangeActivity: async (rangeActivityId) => {
+    try {
+      const userActivity = await Activity.findAll({
+        where: {
+          id: {
+            [Op.in]: rangeActivityId
+          }
+        },
+        attributes: [
+          'id', 'title', 'startDate', 'endDate', 'imageUrl'
+        ],
+        include: [{
+          model: Hashtag,
+          attributes: ['content', 'isJob'],
+
+        }]
+      });
+      return userActivity;
+
+    } catch (err) {
+      throw err;
+    }
+  },
 }

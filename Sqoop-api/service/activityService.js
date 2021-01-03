@@ -153,5 +153,63 @@ module.exports = {
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_ALL_LIKE_ACTIVITY_FAIL));
     }
   },
+  getRangeActivity: async (userId, startDate, endDate, jobTag, skillTag, res) => {
+    try {
+      const rawPreRangeActivity = await activityMethod.getPreRangeActivity(userId, startDate, endDate, jobTag, skillTag);
+      if (!rawPreRangeActivity) {
+        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_ACTIVITY));
+      }
+      let preRangeActivity = rawPreRangeActivity.map(data => data.get({ plain: true }))
+      let preIndex = 0;
+      let preDeleteIndexArr = new Array();
+
+      for (let preActivity of preRangeActivity) {
+        let jobHashtag = new Array();
+        let skillHashtag = new Array();
+        preActivity.Hashtags.map(hashtag => {
+          if (hashtag.isJob === true) {
+            return jobHashtag.push(hashtag.content);
+          } else {
+            return skillHashtag.push(hashtag.content);
+          }
+        })
+        if (!(jobTag.every(selectedJob => jobHashtag.includes(selectedJob)) && skillTag.every(selectedSkill => skillHashtag.includes(selectedSkill)))) {
+          preDeleteIndexArr.push(preIndex);
+        }
+        preIndex++;
+      }
+      for (let preDeleteIndex = preDeleteIndexArr.length - 1; preDeleteIndex >= 0; preDeleteIndex--) {
+        preRangeActivity.splice(preDeleteIndexArr[preDeleteIndex], 1);
+      }
+
+      const rangeActivityId = preRangeActivity.map(activity => {
+        return activity.id;
+      })
+      const rawRangeActivity = await activityMethod.getRangeActivity(rangeActivityId);
+      if (!rawRangeActivity) {
+        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_ACTIVITY));
+      }
+      let rangeActivity = rawRangeActivity.map(data => data.get({ plain: true }))
+      for (let activityOrder in rangeActivity) {
+        let jobTag = new Array();
+        let skillTag = new Array();
+        let activity = rangeActivity[activityOrder];
+        activity.Hashtags.map(hashtag => {
+          if (hashtag.isJob === true) {
+            jobTag.push(hashtag.content);
+          } else {
+            skillTag.push(hashtag.content);
+          }
+        })
+        delete rangeActivity[activityOrder].Hashtags;
+        rangeActivity[activityOrder].jobTag = jobTag;
+        rangeActivity[activityOrder].skillTag = skillTag;
+      }
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_ALL_ACTIVITY_SUCCESS, rangeActivity));
+    } catch (err) {
+      console.log(err);
+      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_ALL_ACTIVITY_FAIL));
+    }
+  },
 
 }
