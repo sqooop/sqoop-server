@@ -309,10 +309,10 @@ module.exports = {
         rangeActivity[activityOrder].jobTag = jobTag;
         rangeActivity[activityOrder].skillTag = skillTag;
       }
-      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_ALL_ACTIVITY_SUCCESS, rangeActivity));
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_FILTERED_ACTIVITY_SUCCESS, rangeActivity));
     } catch (err) {
       console.log(err);
-      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_ALL_ACTIVITY_FAIL));
+      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_FILTERED_ACTIVITY_FAIL));
     }
   },
 
