@@ -159,12 +159,10 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          startDate: {
-            [Op.gte]: startDate
-          },
-          endDate: {
-            [Op.lte]: endDate
-          }
+          [Op.or]: [
+            { startDate: { [Op.gte]: startDate } },
+            { endDate: { [Op.lte]: endDate } },
+          ]
         },
         attributes: ['id'],
         include: [{
@@ -174,8 +172,79 @@ module.exports = {
               { [Op.and]: [{ isJob: 1 }, { content: { [Op.in]: jobTag } }] },
               { [Op.and]: [{ isJob: 0 }, { content: { [Op.in]: skillTag } }] }
             ]
-          },
-          attributes: ['content', 'isJob']
+          }
+        }]
+      });
+      return preRangeActivity;
+
+    } catch (err) {
+      throw err;
+    }
+  },
+  getPreDateRangeActivity: async (userId, startDate, endDate) => {
+    try {
+
+      const preRangeActivity = await Activity.findAll({
+        where: {
+          UserId: userId,
+          [Op.or]: [
+            { startDate: { [Op.gte]: startDate } },
+            { endDate: { [Op.lte]: endDate } },
+          ]
+        },
+        attributes: ['id']
+      });
+
+      return preRangeActivity;
+
+    } catch (err) {
+      throw err;
+    }
+  },
+  getPreSkillRangeActivity: async (userId, startDate, endDate, skillTag) => {
+    try {
+      const preRangeActivity = await Activity.findAll({
+        where: {
+          UserId: userId,
+          [Op.or]: [
+            { startDate: { [Op.gte]: startDate } },
+            { endDate: { [Op.lte]: endDate } },
+          ]
+        },
+        attributes: ['id'],
+        include: [{
+          model: Hashtag,
+          where: {
+            [Op.or]: [
+              { [Op.and]: [{ isJob: 0 }, { content: { [Op.in]: skillTag } }] }
+            ]
+          }
+        }]
+      });
+      return preRangeActivity;
+
+    } catch (err) {
+      throw err;
+    }
+  },
+  getPreJobRangeActivity: async (userId, startDate, endDate, jobTag) => {
+    try {
+      const preRangeActivity = await Activity.findAll({
+        where: {
+          UserId: userId,
+          [Op.or]: [
+            { startDate: { [Op.gte]: startDate } },
+            { endDate: { [Op.lte]: endDate } },
+          ]
+        },
+        attributes: ['id'],
+        include: [{
+          model: Hashtag,
+          where: {
+            [Op.or]: [
+              { [Op.and]: [{ isJob: 1 }, { content: { [Op.in]: jobTag } }] }
+            ]
+          }
         }]
       });
       return preRangeActivity;

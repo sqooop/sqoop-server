@@ -46,6 +46,7 @@ module.exports = {
 
   /* 활동 */
   NO_ACTIVITY: '저장된 활동이 없습니다',
+  NO_DATE: '날짜를 입력받지 못하였습니다',
   CREATE_ACTIVITY_SUCCESS: '활동 생성 성공',
   CREATE_ACTIVITY_FAIL: '활동 생성 실패',
   UPDATE_ACTIVITY_SUCCESS: '활동 정보 수정 성공',
