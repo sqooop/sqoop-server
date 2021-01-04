@@ -106,13 +106,14 @@ module.exports = {
 
       const deletedHashtag = await hashtagMethod.deleteHashtag(ActivityId);
       let hashtagList = await hashtagService.createHashtagList(jobTag, skillTag);
-      
+
       hashtagList.map(hashtag => {
         return hashtag.ActivityId = ActivityId;
       })
       const newHashtag = await hashtagMethod.createHashtag(hashtagList);
-      
+
       let updatedCard;
+
 
       if(questions && contents) {
         for(let number = 1; number <= 10; number++) {
@@ -122,6 +123,7 @@ module.exports = {
             ActivityId, 
             contents[number-1]);
         }
+
       }
 
       if (!updatedActivity || !deletedHashtag) { // 근데 어차피 서버에러로 넘어가는 듯?(ActivityId값이 없는 것이 들어오면 자식인 해쉬태그를 먼저 생성하는 거니까 바로 서버에러 나서 ㅇ.ㅇ)
@@ -264,38 +266,33 @@ module.exports = {
   },
   getRangeActivity: async (userId, startDate, endDate, jobTag, skillTag, res) => {
     try {
-      const rawPreRangeActivity = await activityMethod.getPreRangeActivity(userId, startDate, endDate, jobTag, skillTag);
-      if (!rawPreRangeActivity) {
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_ACTIVITY));
-      }
-      let preRangeActivity = rawPreRangeActivity.map(data => data.get({ plain: true }))
-      let preIndex = 0;
-      let preDeleteIndexArr = new Array();
 
-      for (let preActivity of preRangeActivity) {
-        let jobHashtag = new Array();
-        let skillHashtag = new Array();
-        preActivity.Hashtags.map(hashtag => {
-          if (hashtag.isJob === true) {
-            return jobHashtag.push(hashtag.content);
-          } else {
-            return skillHashtag.push(hashtag.content);
-          }
-        })
-        if (!(jobTag.every(selectedJob => jobHashtag.includes(selectedJob)) && skillTag.every(selectedSkill => skillHashtag.includes(selectedSkill)))) {
-          preDeleteIndexArr.push(preIndex);
+      if (!startDate || !endDate) {
+        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_DATE));
+      }
+      let rawPreRangeActivity;
+      if (!jobTag) {
+        if (!skillTag) {
+          rawPreRangeActivity = await activityMethod.getPreDateRangeActivity(userId, startDate, endDate);
+          console.log(rawPreRangeActivity);
+        } else {
+          rawPreRangeActivity = await activityMethod.getPreSkillRangeActivity(userId, startDate, endDate, skillTag);
         }
-        preIndex++;
-      }
-      for (let preDeleteIndex = preDeleteIndexArr.length - 1; preDeleteIndex >= 0; preDeleteIndex--) {
-        preRangeActivity.splice(preDeleteIndexArr[preDeleteIndex], 1);
+      } else {
+        if (!skillTag) {
+          rawPreRangeActivity = await activityMethod.getPreJobRangeActivity(userId, startDate, endDate, jobTag);
+        } else {
+          rawPreRangeActivity = await activityMethod.getPreRangeActivity(userId, startDate, endDate, jobTag, skillTag);
+        }
       }
 
+
+      let preRangeActivity = rawPreRangeActivity.map(data => data.get({ plain: true }))
       const rangeActivityId = preRangeActivity.map(activity => {
         return activity.id;
       })
       const rawRangeActivity = await activityMethod.getRangeActivity(rangeActivityId);
-      if (!rawRangeActivity) {
+      if (!rawRangeActivity[0]) {
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_ACTIVITY));
       }
       let rangeActivity = rawRangeActivity.map(data => data.get({ plain: true }))
