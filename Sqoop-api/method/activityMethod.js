@@ -159,7 +159,7 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.or]: [
+          [Op.and]: [
             { startDate: { [Op.gte]: startDate } },
             { endDate: { [Op.lte]: endDate } },
           ]
@@ -187,7 +187,7 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.or]: [
+          [Op.and]: [
             { startDate: { [Op.gte]: startDate } },
             { endDate: { [Op.lte]: endDate } },
           ]
@@ -206,7 +206,7 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.or]: [
+          [Op.and]: [
             { startDate: { [Op.gte]: startDate } },
             { endDate: { [Op.lte]: endDate } },
           ]
@@ -232,7 +232,7 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.or]: [
+          [Op.and]: [
             { startDate: { [Op.gte]: startDate } },
             { endDate: { [Op.lte]: endDate } },
           ]
