@@ -33,7 +33,7 @@ module.exports = {
             if (!rawActivity) {
                 return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_ACTIVITY));
             }
-            const allActivity = rawActivity.map(data => data.get({ plain: true }));
+            const allActivity = rawActivity.map(data => data.get({ plain: true })); // sequelize에서 return된 데이터들을 좀 더 사용하기 쉽게 바꿔준다.
             let activityId = new Array();
             for (let activity of allActivity) {
                 activityId.push(activity.id)
