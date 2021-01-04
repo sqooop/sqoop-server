@@ -100,6 +100,7 @@ module.exports = {
     const {
       ActivityId
     } = req.params;
+    
     const selectedActivity = await activityService.getActivity(ActivityId, res);
 
     return selectedActivity;

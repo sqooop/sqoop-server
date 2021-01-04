@@ -81,7 +81,7 @@ module.exports = {
     contents,
     res
   ) => {
-    if (!title || !startDate || !endDate || !jobTag || !skillTag) {
+    if (!ActivityId || !title || !startDate || !endDate || !jobTag || !skillTag) {
       console.log('필요값 누락');
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
     }
@@ -114,17 +114,22 @@ module.exports = {
 
       let updatedCard;
 
-      for (let number = 1; number <= 10; number++) {
-        updatedCard = await cardMethod.updateCard(
-          number,
-          questions[number - 1],
-          ActivityId,
-          contents[number - 1]);
+
+      if(questions && contents) {
+        for(let number = 1; number <= 10; number++) {
+          updatedCard = await cardMethod.updateCard(
+            number, 
+            questions[number-1], 
+            ActivityId, 
+            contents[number-1]);
+        }
+
       }
 
-      if (!updatedActivity || !deletedHashtag || !newHashtag || !updatedCard) {
+      if (!updatedActivity || !deletedHashtag) { // 근데 어차피 서버에러로 넘어가는 듯?(ActivityId값이 없는 것이 들어오면 자식인 해쉬태그를 먼저 생성하는 거니까 바로 서버에러 나서 ㅇ.ㅇ)
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.UPDATE_ACTIVITY_FAIL));
       }
+      
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.UPDATE_ACTIVITY_SUCCESS, updatedActivity));
     } catch (err) {
       console.error(err);

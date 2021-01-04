@@ -11,12 +11,12 @@ const twoFieldUpload = upload.fields([{
   maxCount: 1
 }]);
 
-router.get('/getOneActivity/:ActivityId', activityController.getActivity);
-router.post('/create', twoFieldUpload, activityController.createActivity);
-router.put('/update/', twoFieldUpload, activityController.updateActivity);
-router.get('/getAllActivity', activityController.getAllActivity);
+router.get('/getOneActivity/:ActivityId', activityController.getActivity); // ⚡
+router.post('/create', twoFieldUpload, activityController.createActivity); // ⚡
+router.put('/update/', twoFieldUpload, activityController.updateActivity); // ⚡
+router.get('/getAllActivity', activityController.getAllActivity); // ⚡
 router.put('/likeActivity/:ActivityId', activityController.likeActivity);
-router.get('/getLikeActivity', activityController.getAllLikeActivity);
+router.get('/getLikeActivity', activityController.getAllLikeActivity); // ⚡
 router.get('/getRangeActivity', activityController.getRangeActivity);
 
 module.exports = router;

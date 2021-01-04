@@ -45,9 +45,6 @@ module.exports = {
 
     try {
       const updatedCard = await cardMethod.updateCard(number, question, ActivityId, content);
-      if(updatedCard == 0) { // 어차피 저장된 뒤에 수정이 되는 거라 이럴 케이스가 없긴하겠지만 일단..? 만들어놓음...ㅎㅎ
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.UPDATE_CARD_FAIL));
-      }
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.UPDATE_CARD_SUCCESS, updatedCard));
     } catch (err) {
       console.error(err);
