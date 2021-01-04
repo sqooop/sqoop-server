@@ -69,7 +69,7 @@ module.exports = {
   CREATE_CARD_SUCCESS: '카드 생성 성공',
   CREATE_CARD_FAIL: '카드 생성 실패',
   GET_CARD_SUCCESS: '카드 조회 성공',
-  GET_CARD_FAIL: '카드 조회 실패',
+  GET_CARD_FAIL: '카드 조회 성공',
   UPDATE_CARD_SUCCESS: '카드 수정 성공',
   UPDATE_CARD_FAIL: '카드 수정 실패',
 

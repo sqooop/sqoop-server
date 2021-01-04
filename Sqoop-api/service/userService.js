@@ -41,7 +41,7 @@ module.exports = {
             const inputPassword = await crypto.pbkdf2Sync(logPassword, salt, 10000, 64, 'sha512').toString('base64');
             if (inputPassword !== password) {
                 console.log('비밀번호가 일치하지 않음');
-                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.OK, responseMessage.MISS_MATCH_PW));
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.MISS_MATCH_PW));
             }
             const { accessToken } = await jwt.sign(user);
             return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGN_IN_SUCCESS, { id, email, userName, accessToken }));
