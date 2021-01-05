@@ -51,4 +51,4 @@
 
 ## 📕 API Specification
 
-[📖LINK](https://github.com/sqooop/Sqoop-Server/wiki)
+[📖LINK](https://www.notion.so/Sqoop-API-Specification-fb56e53baf514e86b9dbfcf3180a1799)
