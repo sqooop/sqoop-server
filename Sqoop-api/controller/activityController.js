@@ -3,6 +3,7 @@ const activityService = require('../service/activityService');
 
 module.exports = {
   createActivity: async (req, res) => {
+    console.log(req.body);
     const {
       title,
       startDate,
@@ -100,7 +101,7 @@ module.exports = {
     const {
       ActivityId
     } = req.params;
-    
+
     const selectedActivity = await activityService.getActivity(ActivityId, res);
 
     return selectedActivity;
