@@ -17,6 +17,11 @@ module.exports = {
     let fileUrl = "";
     let fileName = "";
 
+    // if(!req.files) {
+    //   console.log('필요값 누락');
+    //   return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+    // } // 바디 아무것도 안들어온 것 해결
+
     if (req.files['imageUrl']) {
       imageUrl = req.files['imageUrl'][0].location;
     }

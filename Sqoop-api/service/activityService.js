@@ -6,8 +6,6 @@ const hashtagMethod = require('../method/hashtagMethod');
 const hashtagService = require('./hashtagService');
 const cardMethod = require('../method/cardMethod');
 
-
-
 module.exports = {
   createActivity: async (
     title,
