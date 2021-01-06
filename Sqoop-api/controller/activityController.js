@@ -17,15 +17,10 @@ module.exports = {
     let fileUrl = "";
     let fileName = "";
 
-    // if(!req.files) {
-    //   console.log('필요값 누락');
-    //   return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
-    // } // 바디 아무것도 안들어온 것 해결
-
-    if (req.files['imageUrl']) {
+    if (req.files ? req.files['imageUrl'] : false) {
       imageUrl = req.files['imageUrl'][0].location;
     }
-    if (req.files['fileUrl']) {
+    if (req.files ? req.files['fileUrl'] : false) {
       fileUrl = req.files['fileUrl'][0].location;
       fileName = req.files['fileUrl'][0].originalname;
     }
@@ -66,10 +61,10 @@ module.exports = {
     let fileUrl = "";
     let fileName = "";
 
-    if (req.files['imageUrl']) {
+    if (req.files ? req.files['imageUrl'] : false) {
       imageUrl = req.files['imageUrl'][0].location;
     }
-    if (req.files['fileUrl']) {
+    if (req.files ? req.files['fileUrl'] : false) {
       fileUrl = req.files['fileUrl'][0].location;
       fileName = req.files['fileUrl'][0].originalname;
     }
@@ -105,7 +100,7 @@ module.exports = {
     const {
       ActivityId
     } = req.params;
-    
+
     const selectedActivity = await activityService.getActivity(ActivityId, res);
 
     return selectedActivity;
