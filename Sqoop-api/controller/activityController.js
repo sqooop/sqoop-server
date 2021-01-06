@@ -3,7 +3,6 @@ const activityService = require('../service/activityService');
 
 module.exports = {
   createActivity: async (req, res) => {
-    console.log(req.body);
     const {
       title,
       startDate,
@@ -18,10 +17,10 @@ module.exports = {
     let fileUrl = "";
     let fileName = "";
 
-    if (req.files['imageUrl']) {
+    if (req.files ? req.files['imageUrl'] : false) {
       imageUrl = req.files['imageUrl'][0].location;
     }
-    if (req.files['fileUrl']) {
+    if (req.files ? req.files['fileUrl'] : false) {
       fileUrl = req.files['fileUrl'][0].location;
       fileName = req.files['fileUrl'][0].originalname;
     }
