@@ -276,4 +276,40 @@ module.exports = {
       throw err;
     }
   },
+  getAllIncompleteActivity: async (incompleteList, UserId) => {
+    try {
+      const incompleteActivity = await Activity.findAll({
+        where: {
+          UserId,
+          id: {
+            [Op.in]: incompleteList
+          }
+        },
+        attributes: [
+          'id', 'title', 'startDate', 'endDate', 'imageUrl'
+        ],
+        include: [{
+          model: Hashtag,
+          attributes: ['content', 'isJob'],
+
+        }]
+      });
+      return incompleteActivity;
+
+    } catch (err) {
+      throw err;
+    }
+  },
+  deleteActivity: async (ActivityId) => {
+    try {
+      await Activity.destroy({
+        where: {
+          id: ActivityId
+        }
+      });
+      return "활동 삭제 완료";
+    } catch (err) {
+      throw err;
+    }
+  }
 }

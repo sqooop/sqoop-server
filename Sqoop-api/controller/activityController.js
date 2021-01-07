@@ -121,5 +121,15 @@ module.exports = {
     const { startDate, endDate, jobTag, skillTag } = req.query;
     const rangeActivity = await activityService.getRangeActivity(userId, startDate, endDate, jobTag, skillTag, res);
     return rangeActivity;
+  },
+  getAllIncompleteActivity: async (req, res) => {
+    const UserId = req.decoded.id;
+    const incompleteActivity = await activityService.getAllIncompleteActivity(UserId, res);
+    return incompleteActivity;
+  },
+  deleteActivity: async (req, res) => {
+    const { ActivityId } = req.params;
+    const deletedActivity = await activityService.deleteActivity(ActivityId, res);
+    return deletedActivity;
   }
 }
