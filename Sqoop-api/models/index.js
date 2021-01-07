@@ -24,11 +24,11 @@ db.User.hasMany(db.Activity, { onDelete: 'cascade' });
 db.Activity.belongsTo(db.User);
 
 // 1 : N 관계 Activity : QuestionCard
-db.Activity.hasMany(db.QuestionCard);
+db.Activity.hasMany(db.QuestionCard, { onDelete: 'cascade' });
 db.QuestionCard.belongsTo(db.Activity);
 
 // 1 : N 관계 Activity : Hashtag
-db.Activity.hasMany(db.Hashtag);
+db.Activity.hasMany(db.Hashtag, { onDelete: 'cascade' });
 db.Hashtag.belongsTo(db.Activity);
 
 // db.Hashtag.removeAttribute('id');
