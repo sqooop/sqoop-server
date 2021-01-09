@@ -61,10 +61,10 @@ module.exports = {
     let fileUrl = "";
     let fileName = "";
 
-    if (req.files['imageUrl']) {
+    if (req.files ? req.files['imageUrl'] : false) {
       imageUrl = req.files['imageUrl'][0].location;
     }
-    if (req.files['fileUrl']) {
+    if (req.files ? req.files['fileUrl'] : false) {
       fileUrl = req.files['fileUrl'][0].location;
       fileName = req.files['fileUrl'][0].originalname;
     }
@@ -122,6 +122,7 @@ module.exports = {
     const rangeActivity = await activityService.getRangeActivity(userId, startDate, endDate, jobTag, skillTag, res);
     return rangeActivity;
   },
+
   getActivityDate: async (req, res) => {
     const userId = req.decoded.id;
     const activityDate = await activityService.getFullDate(userId, res);
@@ -132,6 +133,18 @@ module.exports = {
     const { month } = req.body;
     const monthlyActivity = await activityService.getMonthlyActivity(userId, month, res);
     return monthlyActivity;
+  },
+
+  getAllIncompleteActivity: async (req, res) => {
+    const UserId = req.decoded.id;
+    const incompleteActivity = await activityService.getAllIncompleteActivity(UserId, res);
+    return incompleteActivity;
+  },
+  deleteActivity: async (req, res) => {
+    const { ActivityId } = req.params;
+    const deletedActivity = await activityService.deleteActivity(ActivityId, res);
+    return deletedActivity;
+
   }
 
 }

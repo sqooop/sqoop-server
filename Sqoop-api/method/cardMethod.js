@@ -1,6 +1,8 @@
 const {
     QuestionCard
 } = require('../models');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 module.exports = {
     createCard: async (number, question, ActivityId, content) => {
@@ -41,6 +43,25 @@ module.exports = {
                 }
             });
             return "질문 카드 수정 완료";
+        } catch (err) {
+            throw err;
+        }
+    },
+    getCompleteList: async (activityIdList) => {
+        try {
+            const completeList = await QuestionCard.findAll({
+                attributes: ['ActivityId'],
+                where: {
+                    ActivityId: {
+                        [Op.in]: activityIdList
+                    },
+                    number: 10
+                }
+            }, 
+            {
+                plain: true
+            });
+            return completeList;
         } catch (err) {
             throw err;
         }

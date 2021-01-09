@@ -30,6 +30,12 @@ module.exports = {
   DELETE_USER_SUCCESS: "사용자 삭제 성공",
   DELETE_USER_FAIL: "사용자 삭제 실패",
 
+  /* Mypage */
+  GET_MY_PAGE_SUCCESS: '마이페이지 조회 성공',
+  GET_MY_PAGE_FAIL: '마이페이지 조회 실패',
+  UPDATE_MY_PAGE_SUCCESS: '마이페이지 수정 성공',
+  UPDATE_MY_PAGE_FAIL: '마이페이지 수정 실패',
+
   /* Post */
   CREATE_POST_SUCCESS: "게시글 생성 완료",
   CREATE_POST_FAIL: "게시글 생성 실패",
@@ -63,6 +69,11 @@ module.exports = {
   GET_FILTERED_ACTIVITY_FAIL: '전체 활동 필터링 가져오기 실패',
   GET_ALL_DATE_SUCCESS: '전체 활동 날짜(월) 가져오기 성공',
   GET_ALL_DATE_FAIL: '전체 활동 날짜(월) 가져오기 실패',
+  GET_INCOMPLETE_ACTIVITY_SUCCESS: '작성 중인 활동 가져오기 성공',
+  GET_INCOMPLETE_ACTIVITY_FAIL: '작성 중인 활동 가져오기 실패',
+  DELETE_ACTIVITY_SUCCESS: '활동 삭제 성공',
+  DELETE_ACTIVITY_FAIL: '활동 삭제 실패',
+
 
 
   /* 질문 */
