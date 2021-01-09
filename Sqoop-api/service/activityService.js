@@ -345,8 +345,7 @@ module.exports = {
       console.error(err);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.DELETE_ACTIVITY_FAIL));
     }
-  }
-
+  },
   getFullDate: async (UserId, res) => {
     try {
       const rawDate = await activityMethod.getActivityDate(UserId);

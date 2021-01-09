@@ -1,5 +1,6 @@
 const {
-  Activity, Hashtag
+  Activity,
+  Hashtag
 } = require('../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -78,16 +79,22 @@ module.exports = {
         },
       });
       if (!checkLike.star) {
-        const likeActivity = await Activity.update(
-          { star: 1 },
-          { where: { id: ActivityId } }
-        )
+        const likeActivity = await Activity.update({
+          star: 1
+        }, {
+          where: {
+            id: ActivityId
+          }
+        })
         return '즐겨찾기 추가';
       } else {
-        const unlikeActivity = await Activity.update(
-          { star: 0 },
-          { where: { id: ActivityId } }
-        )
+        const unlikeActivity = await Activity.update({
+          star: 0
+        }, {
+          where: {
+            id: ActivityId
+          }
+        })
         return '즐겨찾기 해제';
       }
 
@@ -165,18 +172,40 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.and]: [
-            { startDate: { [Op.gte]: startDate } },
-            { endDate: { [Op.lte]: endDate } },
+          [Op.and]: [{
+              startDate: {
+                [Op.gte]: startDate
+              }
+            },
+            {
+              endDate: {
+                [Op.lte]: endDate
+              }
+            },
           ]
         },
         attributes: ['id'],
         include: [{
           model: Hashtag,
           where: {
-            [Op.or]: [
-              { [Op.and]: [{ isJob: 1 }, { content: { [Op.in]: jobTag } }] },
-              { [Op.and]: [{ isJob: 0 }, { content: { [Op.in]: skillTag } }] }
+            [Op.or]: [{
+                [Op.and]: [{
+                  isJob: 1
+                }, {
+                  content: {
+                    [Op.in]: jobTag
+                  }
+                }]
+              },
+              {
+                [Op.and]: [{
+                  isJob: 0
+                }, {
+                  content: {
+                    [Op.in]: skillTag
+                  }
+                }]
+              }
             ]
           }
         }]
@@ -193,9 +222,16 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.and]: [
-            { startDate: { [Op.gte]: startDate } },
-            { endDate: { [Op.lte]: endDate } },
+          [Op.and]: [{
+              startDate: {
+                [Op.gte]: startDate
+              }
+            },
+            {
+              endDate: {
+                [Op.lte]: endDate
+              }
+            },
           ]
         },
         attributes: ['id']
@@ -212,18 +248,31 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.and]: [
-            { startDate: { [Op.gte]: startDate } },
-            { endDate: { [Op.lte]: endDate } },
+          [Op.and]: [{
+              startDate: {
+                [Op.gte]: startDate
+              }
+            },
+            {
+              endDate: {
+                [Op.lte]: endDate
+              }
+            },
           ]
         },
         attributes: ['id'],
         include: [{
           model: Hashtag,
           where: {
-            [Op.or]: [
-              { [Op.and]: [{ isJob: 0 }, { content: { [Op.in]: skillTag } }] }
-            ]
+            [Op.or]: [{
+              [Op.and]: [{
+                isJob: 0
+              }, {
+                content: {
+                  [Op.in]: skillTag
+                }
+              }]
+            }]
           }
         }]
       });
@@ -238,18 +287,31 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.and]: [
-            { startDate: { [Op.gte]: startDate } },
-            { endDate: { [Op.lte]: endDate } },
+          [Op.and]: [{
+              startDate: {
+                [Op.gte]: startDate
+              }
+            },
+            {
+              endDate: {
+                [Op.lte]: endDate
+              }
+            },
           ]
         },
         attributes: ['id'],
         include: [{
           model: Hashtag,
           where: {
-            [Op.or]: [
-              { [Op.and]: [{ isJob: 1 }, { content: { [Op.in]: jobTag } }] }
-            ]
+            [Op.or]: [{
+              [Op.and]: [{
+                isJob: 1
+              }, {
+                content: {
+                  [Op.in]: jobTag
+                }
+              }]
+            }]
           }
         }]
       });
@@ -296,7 +358,10 @@ module.exports = {
         attributes: ['startDate', 'endDate']
       });
       return activityDate;
-},
+    } catch (err) {
+      throw err;
+    }
+  },
 
   getAllIncompleteActivity: async (incompleteList, UserId) => {
     try {
@@ -318,15 +383,12 @@ module.exports = {
         }]
       });
       return incompleteActivity;
-   
-
     } catch (err) {
       throw err;
     }
   },
 
-  getMonthlyActivity: async (userId, month) => {
-  },
+  getMonthlyActivity: async (userId, month) => {},
 
   deleteActivity: async (ActivityId) => {
     try {
