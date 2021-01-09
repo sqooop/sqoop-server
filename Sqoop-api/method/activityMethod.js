@@ -298,5 +298,8 @@ module.exports = {
     } catch (err) {
       throw err;
     }
+  },
+  getMonthlyActivity: async (userId, month) => {
+
   }
 }

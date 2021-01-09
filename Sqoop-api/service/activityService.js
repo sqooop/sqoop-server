@@ -380,6 +380,13 @@ module.exports = {
       console.log(err);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_ALL_DATE_FAIL));
     }
+  },
+  getMonthlyActivity: async (userId, month, res) => {
+    try {
+      let intMonth = month;
+      intMonth *= 1;
+      // const startMonthDate = month
+    }
   }
 
 }

@@ -126,6 +126,12 @@ module.exports = {
     const userId = req.decoded.id;
     const activityDate = await activityService.getFullDate(userId, res);
     return activityDate;
+  },
+  getMonthlyActivity: async (req, res) => {
+    const userId = req.decoded.id;
+    const { month } = req.body;
+    const monthlyActivity = await activityService.getMonthlyActivity(userId, month, res);
+    return monthlyActivity;
   }
 
 }
