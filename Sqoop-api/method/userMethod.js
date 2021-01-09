@@ -1,5 +1,8 @@
 const crypto = require('crypto');
-const { User } = require('../models');
+const {
+    User, 
+    Education
+} = require('../models');
 
 module.exports = {
     readOneEmail: async (email) => {
@@ -25,6 +28,25 @@ module.exports = {
                 salt
             });
             return user;
+        } catch (err) {
+            throw err;
+        }
+    },
+    getMyPage: async (UserId) => {
+        try {
+            const myPageInfo = await User.findOne({
+                where: {
+                    id: UserId
+                },
+                attributes: [
+                    'email', 'userName'
+                ],
+                include: [{
+                    model: Education,
+                    attributes: ['school', 'startDate', 'endDate', 'major'],
+                }]
+            });
+            return myPageInfo;
         } catch (err) {
             throw err;
         }

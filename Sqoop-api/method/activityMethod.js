@@ -279,6 +279,7 @@ module.exports = {
   getAllIncompleteActivity: async (incompleteList, UserId) => {
     try {
       const incompleteActivity = await Activity.findAll({
+        order: ['startDate'],
         where: {
           UserId,
           id: {
