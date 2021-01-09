@@ -316,4 +316,70 @@ module.exports = {
     }
   },
 
+  getFullDate: async (UserId, res) => {
+    try {
+      const rawDate = await activityMethod.getActivityDate(UserId);
+      let rawYearMonth = [];
+      rawDate.forEach(date => {
+        let startYear = date.startDate.slice(0, 4);
+        let endYear = date.endDate.slice(0, 4);
+        let startMonth = date.startDate.slice(4, 6);
+        let endMonth = date.endDate.slice(4, 6);
+        startYear *= 1;
+        endYear *= 1;
+        startMonth *= 1;
+        endMonth *= 1;
+
+        for (let year = startYear; year <= endYear; year++) {
+
+          if (year === startYear && year === endYear) {
+            for (let month = startMonth; month <= endMonth; month++) {
+              rawYearMonth.push(year * 100 + month)
+            }
+          } else if (year === startYear) {
+            for (let month = startMonth; month <= 12; month++) {
+              rawYearMonth.push(year * 100 + month)
+            }
+          } else if (year === endYear) {
+            for (let month = 1; month <= endMonth; month++) {
+              rawYearMonth.push(year * 100 + month)
+            }
+          } else {
+            for (let month = 1; month <= 12; month++) {
+              rawYearMonth.push(year * 100 + month)
+            }
+          }
+        }
+      })
+      rawYearMonth = Array.from(new Set(rawYearMonth));
+      rawYearMonth.sort((a, b) => {
+        return a - b;
+      })
+      const rawYear = rawYearMonth.map(date => {
+        return date.toString().slice(0, 4);
+      })
+
+      let firstYear = rawYear[0]
+      let lastYear = rawYear[rawYear.length - 1];
+      firstYear *= 1;
+      lastYear *= 1;
+      let allMonthArray = [];
+      for (let i = firstYear; i <= lastYear; i++) {
+        for (let j = 1; j <= 12; j++) {
+          let checkMonth = i * 100 + j;
+          if (rawYearMonth.includes(checkMonth)) {
+            allMonthArray.push(checkMonth);
+          } else {
+            allMonthArray.push([]);
+          }
+        }
+      }
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_ALL_DATE_SUCCESS, { firstYear, lastYear, allMonthArray }));
+
+    } catch (err) {
+      console.log(err);
+      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_ALL_DATE_FAIL));
+    }
+  }
+
 }

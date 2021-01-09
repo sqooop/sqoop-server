@@ -121,5 +121,11 @@ module.exports = {
     const { startDate, endDate, jobTag, skillTag } = req.query;
     const rangeActivity = await activityService.getRangeActivity(userId, startDate, endDate, jobTag, skillTag, res);
     return rangeActivity;
+  },
+  getActivityDate: async (req, res) => {
+    const userId = req.decoded.id;
+    const activityDate = await activityService.getFullDate(userId, res);
+    return activityDate;
   }
+
 }

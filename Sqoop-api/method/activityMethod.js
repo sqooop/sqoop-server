@@ -120,6 +120,9 @@ module.exports = {
         attributes: [
           'id', 'title', 'startDate', 'endDate', 'imageUrl'
         ],
+        order: [
+          ['startDate', 'ASC']
+        ],
         include: [{
           model: Hashtag,
           attributes: ['content', 'isJob'],
@@ -141,6 +144,9 @@ module.exports = {
         },
         attributes: [
           'id', 'title', 'startDate', 'endDate', 'imageUrl'
+        ],
+        order: [
+          ['startDate', 'ASC']
         ],
         include: [{
           model: Hashtag,
@@ -264,6 +270,9 @@ module.exports = {
         attributes: [
           'id', 'title', 'startDate', 'endDate', 'imageUrl'
         ],
+        order: [
+          ['startDate', 'ASC']
+        ],
         include: [{
           model: Hashtag,
           attributes: ['content', 'isJob'],
@@ -276,4 +285,18 @@ module.exports = {
       throw err;
     }
   },
+  getActivityDate: async (UserId) => {
+    try {
+      const activityDate = await Activity.findAll({
+        where: {
+          UserId
+        },
+        raw: true,
+        attributes: ['startDate', 'endDate']
+      });
+      return activityDate;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
