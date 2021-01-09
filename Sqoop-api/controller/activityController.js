@@ -122,6 +122,19 @@ module.exports = {
     const rangeActivity = await activityService.getRangeActivity(userId, startDate, endDate, jobTag, skillTag, res);
     return rangeActivity;
   },
+
+  getActivityDate: async (req, res) => {
+    const userId = req.decoded.id;
+    const activityDate = await activityService.getFullDate(userId, res);
+    return activityDate;
+  },
+  getMonthlyActivity: async (req, res) => {
+    const userId = req.decoded.id;
+    const { month } = req.body;
+    const monthlyActivity = await activityService.getMonthlyActivity(userId, month, res);
+    return monthlyActivity;
+  },
+
   getAllIncompleteActivity: async (req, res) => {
     const UserId = req.decoded.id;
     const incompleteActivity = await activityService.getAllIncompleteActivity(UserId, res);
@@ -131,5 +144,7 @@ module.exports = {
     const { ActivityId } = req.params;
     const deletedActivity = await activityService.deleteActivity(ActivityId, res);
     return deletedActivity;
+
   }
+
 }
