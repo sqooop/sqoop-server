@@ -67,6 +67,8 @@ module.exports = {
   GET_ALL_LIKE_ACTIVITY_FAIL: '전체 즐겨찾기 가져오기 실패',
   GET_FILTERED_ACTIVITY_SUCCESS: '전체 활동 필터링 가져오기 성공',
   GET_FILTERED_ACTIVITY_FAIL: '전체 활동 필터링 가져오기 실패',
+  GET_ALL_DATE_SUCCESS: '전체 활동 날짜(월) 가져오기 성공',
+  GET_ALL_DATE_FAIL: '전체 활동 날짜(월) 가져오기 실패',
   GET_INCOMPLETE_ACTIVITY_SUCCESS: '작성 중인 활동 가져오기 성공',
   GET_INCOMPLETE_ACTIVITY_FAIL: '작성 중인 활동 가져오기 실패',
   DELETE_ACTIVITY_SUCCESS: '활동 삭제 성공',

@@ -120,6 +120,9 @@ module.exports = {
         attributes: [
           'id', 'title', 'startDate', 'endDate', 'imageUrl'
         ],
+        order: [
+          ['startDate', 'ASC']
+        ],
         include: [{
           model: Hashtag,
           attributes: ['content', 'isJob'],
@@ -141,6 +144,9 @@ module.exports = {
         },
         attributes: [
           'id', 'title', 'startDate', 'endDate', 'imageUrl'
+        ],
+        order: [
+          ['startDate', 'ASC']
         ],
         include: [{
           model: Hashtag,
@@ -264,6 +270,9 @@ module.exports = {
         attributes: [
           'id', 'title', 'startDate', 'endDate', 'imageUrl'
         ],
+        order: [
+          ['startDate', 'ASC']
+        ],
         include: [{
           model: Hashtag,
           attributes: ['content', 'isJob'],
@@ -276,6 +285,19 @@ module.exports = {
       throw err;
     }
   },
+
+  getActivityDate: async (UserId) => {
+    try {
+      const activityDate = await Activity.findAll({
+        where: {
+          UserId
+        },
+        raw: true,
+        attributes: ['startDate', 'endDate']
+      });
+      return activityDate;
+},
+
   getAllIncompleteActivity: async (incompleteList, UserId) => {
     try {
       const incompleteActivity = await Activity.findAll({
@@ -296,11 +318,16 @@ module.exports = {
         }]
       });
       return incompleteActivity;
+   
 
     } catch (err) {
       throw err;
     }
   },
+
+  getMonthlyActivity: async (userId, month) => {
+  },
+
   deleteActivity: async (ActivityId) => {
     try {
       await Activity.destroy({
@@ -312,5 +339,6 @@ module.exports = {
     } catch (err) {
       throw err;
     }
+
   }
 }
