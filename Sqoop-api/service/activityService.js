@@ -383,9 +383,14 @@ module.exports = {
   },
   getMonthlyActivity: async (userId, month, res) => {
     try {
-      let intMonth = month;
-      intMonth *= 1;
-      // const startMonthDate = month
+      const compareEndDate = month * 100 + 1;
+      const compareStartDate = month * 100 + 31;
+      // 비교를 startDate < compareStartDate && endDate > compareEndDate
+
+
+    } catch (err) {
+      console.log(err);
+      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_MONTHLY_ACTIVITY_FAIL));
     }
   }
 
