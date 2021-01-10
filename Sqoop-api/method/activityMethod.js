@@ -299,7 +299,33 @@ module.exports = {
       throw err;
     }
   },
-  getMonthlyActivity: async (userId, month) => {
+  getMonthlyActivity: async (userId, endDateComparement, startDateComparement) => {
+    try {
+      const monthlyActivity = await Activity.findAll({
+        where: {
+          UserId: userId,
+          [Op.and]: [
+            { startDate: { [Op.lte]: startDateComparement } },
+            { endDate: { [Op.gte]: endDateComparement } },
+          ]
+        },
+        attributes: [
+          'id', 'title', 'startDate', 'endDate', 'imageUrl'
+        ],
+        order: [
+          ['startDate', 'ASC']
+        ],
+        include: [{
+          model: Hashtag,
+          attributes: ['content', 'isJob'],
 
+        }]
+      });
+
+      return monthlyActivity;
+
+    } catch (err) {
+      throw err;
+    }
   }
 }

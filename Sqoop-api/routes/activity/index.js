@@ -19,5 +19,6 @@ router.put('/likeActivity/:ActivityId', activityController.likeActivity);
 router.get('/getLikeActivity', activityController.getAllLikeActivity); // ⚡
 router.get('/getRangeActivity', activityController.getRangeActivity);
 router.get('/getActivityDate', activityController.getActivityDate);
+router.get('/:month/getMonthlyActivity', activityController.getMonthlyActivity);
 
 module.exports = router;

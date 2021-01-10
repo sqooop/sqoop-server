@@ -209,9 +209,7 @@ module.exports = {
   getAllActivity: async (userId, res) => {
     try {
       const rawUserActivity = await activityMethod.getAllActivity(userId);
-      if (!rawUserActivity) {
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_ACTIVITY));
-      }
+
       let userActivity = rawUserActivity.map(data => data.get({ plain: true }))
 
       for (let activityOrder in userActivity) {
@@ -238,9 +236,7 @@ module.exports = {
   getAllLikeActivity: async (userId, res) => {
     try {
       const rawUserLikeActivity = await activityMethod.getAllLikeActivity(userId);
-      if (!rawUserLikeActivity) {
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_ACTIVITY));
-      }
+
       let userLikeActivity = rawUserLikeActivity.map(data => data.get({ plain: true }))
 
       for (let activityOrder in userLikeActivity) {
@@ -383,10 +379,32 @@ module.exports = {
   },
   getMonthlyActivity: async (userId, month, res) => {
     try {
-      const compareEndDate = month * 100 + 1;
-      const compareStartDate = month * 100 + 31;
+      let endDateComparement = month * 100 + 1;
+      let startDateComparement = month * 100 + 31;
+      endDateComparement = endDateComparement.toString();
+      startDateComparement = startDateComparement.toString();
+
+      const rawMonthlyActivity = await activityMethod.getMonthlyActivity(userId, endDateComparement, startDateComparement);
       // 비교를 startDate < compareStartDate && endDate > compareEndDate
 
+      let monthlyActivity = rawMonthlyActivity.map(data => data.get({ plain: true }))
+
+      for (let activityOrder in monthlyActivity) {
+        let jobTag = new Array();
+        let skillTag = new Array();
+        let activity = monthlyActivity[activityOrder];
+        activity.Hashtags.map(hashtag => {
+          if (hashtag.isJob === true) {
+            jobTag.push(hashtag.content);
+          } else {
+            skillTag.push(hashtag.content);
+          }
+        })
+        delete monthlyActivity[activityOrder].Hashtags;
+        monthlyActivity[activityOrder].jobTag = jobTag;
+        monthlyActivity[activityOrder].skillTag = skillTag;
+      }
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_MONTHLY_ACTIVITY_SUCCESS, monthlyActivity));
 
     } catch (err) {
       console.log(err);
@@ -395,3 +413,4 @@ module.exports = {
   }
 
 }
+

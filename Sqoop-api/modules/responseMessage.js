@@ -63,6 +63,8 @@ module.exports = {
   GET_FILTERED_ACTIVITY_FAIL: '전체 활동 필터링 가져오기 실패',
   GET_ALL_DATE_SUCCESS: '전체 활동 날짜(월) 가져오기 성공',
   GET_ALL_DATE_FAIL: '전체 활동 날짜(월) 가져오기 실패',
+  GET_MONTHLY_ACTIVITY_SUCCESS: '월별 활동 가져오기 성공',
+  GET_MONTHLY_ACTIVITY_FAIL: '월별 활동 가져오기 실패',
 
 
   /* 질문 */
