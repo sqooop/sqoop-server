@@ -69,10 +69,15 @@ module.exports = {
   GET_FILTERED_ACTIVITY_FAIL: '전체 활동 필터링 가져오기 실패',
   GET_ALL_DATE_SUCCESS: '전체 활동 날짜(월) 가져오기 성공',
   GET_ALL_DATE_FAIL: '전체 활동 날짜(월) 가져오기 실패',
+
+  GET_MONTHLY_ACTIVITY_SUCCESS: '월별 활동 가져오기 성공',
+  GET_MONTHLY_ACTIVITY_FAIL: '월별 활동 가져오기 실패',
+
   GET_INCOMPLETE_ACTIVITY_SUCCESS: '작성 중인 활동 가져오기 성공',
   GET_INCOMPLETE_ACTIVITY_FAIL: '작성 중인 활동 가져오기 실패',
   DELETE_ACTIVITY_SUCCESS: '활동 삭제 성공',
   DELETE_ACTIVITY_FAIL: '활동 삭제 실패',
+
 
 
 

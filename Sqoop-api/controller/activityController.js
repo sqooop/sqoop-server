@@ -135,7 +135,7 @@ module.exports = {
   },
   getMonthlyActivity: async (req, res) => {
     const userId = req.decoded.id;
-    const { month } = req.body;
+    const { month } = req.params;
     const monthlyActivity = await activityService.getMonthlyActivity(userId, month, res);
     return monthlyActivity;
   },
@@ -153,5 +153,6 @@ module.exports = {
     return deletedActivity;
 
   }
+
 
 }

@@ -362,6 +362,34 @@ module.exports = {
       throw err;
     }
   },
+  getMonthlyActivity: async (userId, endDateComparement, startDateComparement) => {
+    try {
+      const monthlyActivity = await Activity.findAll({
+        where: {
+          UserId: userId,
+          [Op.and]: [
+            { startDate: { [Op.lte]: startDateComparement } },
+            { endDate: { [Op.gte]: endDateComparement } },
+          ]
+        },
+        attributes: [
+          'id', 'title', 'startDate', 'endDate', 'imageUrl'
+        ],
+        order: [
+          ['startDate', 'ASC']
+        ],
+        include: [{
+          model: Hashtag,
+          attributes: ['content', 'isJob'],
+          }]
+      });
+
+      return monthlyActivity;
+
+    } catch (err) {
+      throw err;
+    }
+  },
 
   getAllIncompleteActivity: async (incompleteList, UserId) => {
     try {
@@ -371,15 +399,10 @@ module.exports = {
           UserId,
           id: {
             [Op.in]: incompleteList
-          }
-        },
-        attributes: [
-          'id', 'title', 'startDate', 'endDate', 'imageUrl'
-        ],
+          },
         include: [{
           model: Hashtag,
           attributes: ['content', 'isJob'],
-
         }]
       });
       return incompleteActivity;
@@ -387,9 +410,6 @@ module.exports = {
       throw err;
     }
   },
-
-  getMonthlyActivity: async (userId, month) => {},
-
   deleteActivity: async (ActivityId) => {
     try {
       await Activity.destroy({
@@ -401,6 +421,5 @@ module.exports = {
     } catch (err) {
       throw err;
     }
-
   }
-}
+ }
