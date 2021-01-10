@@ -6,8 +6,6 @@ const hashtagMethod = require('../method/hashtagMethod');
 const hashtagService = require('./hashtagService');
 const cardMethod = require('../method/cardMethod');
 
-
-
 module.exports = {
   createActivity: async (
     title,
@@ -311,7 +309,39 @@ module.exports = {
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_FILTERED_ACTIVITY_FAIL));
     }
   },
+  getAllIncompleteActivity: async (UserId, res) => {
+    try {
+      const userActivity = await activityMethod.getAllActivity(UserId);
+      const activityList = userActivity.map(data => data.get({ plain: true }));
+      const activityIdList = activityList.map(data => data.id);
+      const completeList = await cardMethod.getCompleteList(activityIdList);
 
+      for(let complete of completeList) {
+        const idx = activityIdList.indexOf(complete.ActivityId);
+        activityIdList.splice(idx, 1);
+      }
+
+      const incompleteActivity = await activityMethod.getAllIncompleteActivity(activityIdList, UserId);
+
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_INCOMPLETE_ACTIVITY_SUCCESS, incompleteActivity));
+    } catch (err) {
+      console.log(err);
+      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_INCOMPLETE_ACTIVITY_FAIL));
+    }
+  },
+  deleteActivity: async (ActivityId, res) => {
+    if (!ActivityId) {
+      console.log('필요값 누락');
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+    }
+    try {
+      const deletedActivity = await activityMethod.deleteActivity(ActivityId);
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.DELETE_ACTIVITY_SUCCESS, deletedActivity));
+    } catch (err) {
+      console.error(err);
+      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.DELETE_ACTIVITY_FAIL));
+    }
+  },
   getFullDate: async (UserId, res) => {
     try {
       const rawDate = await activityMethod.getActivityDate(UserId);
