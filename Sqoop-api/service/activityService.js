@@ -327,7 +327,25 @@ module.exports = {
 
       const incompleteActivity = await activityMethod.getAllIncompleteActivity(activityIdList, UserId);
 
-      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_INCOMPLETE_ACTIVITY_SUCCESS, incompleteActivity));
+      let incompleteArr = incompleteActivity.map(data => data.get({ plain: true }))
+
+      for (let activityOrder in incompleteArr) {
+        let jobTag = new Array();
+        let skillTag = new Array();
+        let activity = incompleteArr[activityOrder];
+        activity.Hashtags.map(hashtag => {
+          if (hashtag.isJob === true) {
+            jobTag.push(hashtag.content);
+          } else {
+            skillTag.push(hashtag.content);
+          }
+        })
+        delete incompleteArr[activityOrder].Hashtags;
+        incompleteArr[activityOrder].jobTag = jobTag;
+        incompleteArr[activityOrder].skillTag = skillTag;
+      }
+
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_INCOMPLETE_ACTIVITY_SUCCESS, incompleteArr));
     } catch (err) {
       console.log(err);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_INCOMPLETE_ACTIVITY_FAIL));

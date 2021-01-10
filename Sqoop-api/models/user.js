@@ -17,6 +17,43 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(200),
       allowNull: false,
     },
+    // 여기부터 마이페이지 정보
+    profileImg: {
+      type: DataTypes.STRING(100),
+      allowNull: true
+    },
+    birthday: {
+      type: DataTypes.STRING(10),
+      allowNull: true
+    },
+    phone: {
+      type: DataTypes.STRING(20),
+      allowNull: true
+    },
+    sns: {
+      type: DataTypes.STRING(30),
+      allowNull: true
+    },
+    jobBig: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    jobSmall: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    skillBig: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    skillSmall: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    introduce: {
+      type: DataTypes.TEXT(),
+      allowNull: true
+    },
   }, {
     freezeTableName: true,
     timestamps: false,
