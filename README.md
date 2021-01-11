@@ -12,7 +12,7 @@
   <img width="550px" alt="DB" src="https://user-images.githubusercontent.com/33858991/104153030-9dec5880-5424-11eb-811f-2217e0b98120.PNG">
 </p>
 
-## 🧱Server Architecture
+## 👨🏻‍🤝‍👨🏻 Database Relationship
 
 ```js
 // 1 : N 관계 User : Activity
