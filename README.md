@@ -12,6 +12,27 @@
   <img width="550px" alt="DB" src="https://user-images.githubusercontent.com/33858991/104153030-9dec5880-5424-11eb-811f-2217e0b98120.PNG">
 </p>
 
+## 🧱Server Architecture
+
+```js
+// 1 : N 관계 User : Activity
+db.User.hasMany(db.Activity, { onDelete: 'cascade' });
+db.Activity.belongsTo(db.User);
+
+// 1 : N 관계 User : Education
+db.User.hasMany(db.Education, { onDelete: 'cascade' });
+db.Education.belongsTo(db.User);
+
+// 1 : N 관계 Activity : QuestionCard
+db.Activity.hasMany(db.QuestionCard, { onDelete: 'cascade' });
+db.QuestionCard.belongsTo(db.Activity);
+
+// 1 : N 관계 Activity : Hashtag
+db.Activity.hasMany(db.Hashtag, { onDelete: 'cascade' });
+db.Hashtag.belongsTo(db.Activity);
+```
+
+
 ## 📃 핵심 기능 설명
 
 우리 서비스의 핵심은 발등에 불 떨어진 취준생에게 **질문을 통해 취준생, 대학생 활동 정리 기능을 제공**하는 것이다.
