@@ -9,7 +9,7 @@
 ## 🔗 ER Diagram
 
 <p align="center">
-  <img width="500px" alt="DB" src="https://user-images.githubusercontent.com/33858991/103500700-36b42e80-4e8f-11eb-82d1-684fd375c610.PNG">
+  <img width="550px" alt="DB" src="https://user-images.githubusercontent.com/33858991/104153030-9dec5880-5424-11eb-811f-2217e0b98120.PNG">
 </p>
 
 ## 📃 핵심 기능 설명
