@@ -32,6 +32,8 @@ db.Activity.hasMany(db.Hashtag, { onDelete: 'cascade' });
 db.Hashtag.belongsTo(db.Activity);
 ```
 
+## 🧱 Server Architecture
+
 
 ## 📃 핵심 기능 설명
 
