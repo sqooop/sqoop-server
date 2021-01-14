@@ -1,5 +1,13 @@
 # Sqoop-Server
 
+## Server Developers
+|이름|<h3>오승재</h3>|<h3>임찬기</h3>|
+|--|--|
+||<img width="250px" alt="Image" src="https://user-images.githubusercontent.com/69755603/104560591-6f22ec00-5689-11eb-80d3-9c557fda47f4.png">|<img width="250px" alt="Image" src="https://user-images.githubusercontent.com/69755603/104560588-6d592880-5689-11eb-827b-ffe129c2514c.png">| 
+|역할|리드 서버 개발자|서버 개발자|
+|Github|<a href="https://github.com/oh980225">oh980225</a>|<a href="https://github.com/Lim-Changi">Lim-Changi</a>|
+
+
 ## ⚙ Dependencies module
 
 ~~~javascript
@@ -68,8 +76,6 @@ db.Hashtag.belongsTo(db.Activity);
 |GET|모아보기에서 조건에 따라서 활동을 필터링해서 모아보기|
 
 ## 🤝 역할 분담
-
----
 
 <h2> Together </h2>
 
