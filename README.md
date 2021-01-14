@@ -50,7 +50,7 @@ db.Hashtag.belongsTo(db.Activity);
 
 ## 🧱 Server Architecture
 <p align="center">
-  <img width="550px" alt="Architecture" src="https://user-images.githubusercontent.com/69755603/104559074-2ec26e80-5687-11eb-8eb2-5c17ff921453.png">
+  <img width="700px" alt="Architecture" src="https://user-images.githubusercontent.com/69755603/104559074-2ec26e80-5687-11eb-8eb2-5c17ff921453.png">
 </p>
 
 ## 📃 핵심 기능 설명
