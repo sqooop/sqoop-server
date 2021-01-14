@@ -2,9 +2,25 @@
 
 ## ⚙ Dependencies module
 
-<p align="center">
-  <img width="504" alt="스크린샷 2021-01-04 오후 10 09 24" src="https://user-images.githubusercontent.com/69755603/103541194-650d2a80-4ede-11eb-9409-2407e36dde2e.png">
-</p>
+~~~javascript
+  "dependencies": {
+    "aws-sdk": "^2.817.0",
+    "clean-css": "~4.1.11",
+    "constantinople": "~3.1.1",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "install": "^0.13.0",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0"
+  }
+~~~
 
 ## 🔗 ER Diagram
 
@@ -33,7 +49,9 @@ db.Hashtag.belongsTo(db.Activity);
 ```
 
 ## 🧱 Server Architecture
-
+<p align="center">
+  <img width="550px" alt="Architecture" src="https://user-images.githubusercontent.com/69755603/104559074-2ec26e80-5687-11eb-8eb2-5c17ff921453.png">
+</p>
 
 ## 📃 핵심 기능 설명
 
@@ -81,6 +99,7 @@ db.Hashtag.belongsTo(db.Activity);
 - 즐겨찾기 활동 전체 **[GET]**
 - 유저별 전체 해시테그 **[GET]**
 - 활동 필터링 모아보기 **[GET]**
+- 아키텍쳐 작성
 
 ---
 
