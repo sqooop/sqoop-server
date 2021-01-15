@@ -10,7 +10,7 @@
 
 ## ⚙ Dependencies module
 
-~~~javascript
+~~~yaml
   "dependencies": {
     "aws-sdk": "^2.817.0",
     "clean-css": "~4.1.11",
