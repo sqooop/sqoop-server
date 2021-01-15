@@ -14,6 +14,10 @@ module.exports = {
     }
 
     try {
+      const existCard = await cardMethod.getCard(ActivityId, number);
+      if(existCard) {
+        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.CREATE_CARD_FAIL));
+      }
       const newCard = await cardMethod.createCard(number, question, ActivityId, content);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.CREATE_CARD_SUCCESS, newCard));
     } catch (err) {

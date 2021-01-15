@@ -44,11 +44,14 @@ module.exports = {
         introduce
       );
 
-      for(let idx in education) {
-        education[idx].UserId = UserId;
-      }
+      await educationMethod.deleteAllEducation(UserId);
 
-      await educationMethod.updateEducation(UserId, education);
+      if(education) {
+        for(let idx in education) {
+          education[idx].UserId = UserId;
+        }
+        await educationMethod.updateEducation(education);
+      }
 
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.UPDATE_MY_PAGE_SUCCESS, updatedMyPage));
     } catch (err) {
