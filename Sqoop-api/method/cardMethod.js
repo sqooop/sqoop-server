@@ -18,6 +18,20 @@ module.exports = {
             throw err;
         }
     },
+    getCard: async (ActivityId, number) => {
+        try {
+            const existCard = await QuestionCard.findOne({
+                attributes: ['number', 'question', 'content'],
+                where: {
+                    ActivityId, 
+                    number
+                }
+            });
+            return existCard;
+        } catch (err) {
+            throw err;
+        }
+    },
     getCards: async (ActivityId) => {
         try {
             const questionCards = await QuestionCard.findAll({
