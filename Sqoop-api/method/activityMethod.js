@@ -243,7 +243,7 @@ module.exports = {
       throw err;
     }
   },
-  getPreSkillRangeActivity: async (userId, startDate, endDate, skillTag) => {
+  getPreDateSkillRangeActivity: async (userId, startDate, endDate, skillTag) => {
     try {
       const preRangeActivity = await Activity.findAll({
         where: {
@@ -282,7 +282,7 @@ module.exports = {
       throw err;
     }
   },
-  getPreJobRangeActivity: async (userId, startDate, endDate, jobTag) => {
+  getPreDateJobRangeActivity: async (userId, startDate, endDate, jobTag) => {
     try {
       const preRangeActivity = await Activity.findAll({
         where: {
@@ -312,6 +312,100 @@ module.exports = {
                 }
               }]
             }]
+          }
+        }]
+      });
+      return preRangeActivity;
+
+    } catch (err) {
+      throw err;
+    }
+  },
+  getPreSkillRangeActivity: async (userId, skillTag) => {
+    try {
+      const preRangeActivity = await Activity.findAll({
+        where: {
+          UserId: userId,
+        },
+        attributes: ['id'],
+        include: [{
+          model: Hashtag,
+          where: {
+            [Op.or]: [{
+              [Op.and]: [{
+                isJob: 0
+              }, {
+                content: {
+                  [Op.in]: skillTag
+                }
+              }]
+            }]
+          }
+        }]
+      });
+      return preRangeActivity;
+
+    } catch (err) {
+      throw err;
+    }
+  },
+  getPreJobRangeActivity: async (userId, jobTag) => {
+    try {
+      const preRangeActivity = await Activity.findAll({
+        where: {
+          UserId: userId,
+        },
+        attributes: ['id'],
+        include: [{
+          model: Hashtag,
+          where: {
+            [Op.or]: [{
+              [Op.and]: [{
+                isJob: 0
+              }, {
+                content: {
+                  [Op.in]: jobTag
+                }
+              }]
+            }]
+          }
+        }]
+      });
+      return preRangeActivity;
+
+    } catch (err) {
+      throw err;
+    }
+  },
+  getPreJobSkillRangeActivity: async (userId, jobTag, skillTag) => {
+    try {
+      const preRangeActivity = await Activity.findAll({
+        where: {
+          UserId: userId,
+        },
+        attributes: ['id'],
+        include: [{
+          model: Hashtag,
+          where: {
+            [Op.or]: [{
+              [Op.and]: [{
+                isJob: 1
+              }, {
+                content: {
+                  [Op.in]: jobTag
+                }
+              }]
+            },
+            {
+              [Op.and]: [{
+                isJob: 0
+              }, {
+                content: {
+                  [Op.in]: skillTag
+                }
+              }]
+            }
+            ]
           }
         }]
       });

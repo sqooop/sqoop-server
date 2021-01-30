@@ -261,22 +261,42 @@ module.exports = {
   getRangeActivity: async (userId, startDate, endDate, jobTag, skillTag, res) => {
     try {
 
-      if (!startDate || !endDate) {
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_DATE));
+      if (startDate) {
+        if (!endDate) {
+          return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, { message: "끝 날짜를 정해주세요" }));
+        }
       }
+      if (endDate) {
+        if (!startDate) {
+          return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, { message: "시작 날짜를 정해주세요" }));
+        }
+      }
+
       let rawPreRangeActivity;
       if (!jobTag) {
         if (!skillTag) {
-          rawPreRangeActivity = await activityMethod.getPreDateRangeActivity(userId, startDate, endDate);
+          rawPreRangeActivity = await activityMethod.getPreDateRangeActivity(userId, startDate, endDate); //D
           console.log(rawPreRangeActivity);
         } else {
-          rawPreRangeActivity = await activityMethod.getPreSkillRangeActivity(userId, startDate, endDate, skillTag);
+          if (!startDate) {
+            rawPreRangeActivity = await activityMethod.getPreSkillRangeActivity(userId, jobTag) //S
+          } else {
+            rawPreRangeActivity = await activityMethod.getPreDateSkillRangeActivity(userId, startDate, endDate, skillTag); //DS
+          }
         }
       } else {
         if (!skillTag) {
-          rawPreRangeActivity = await activityMethod.getPreJobRangeActivity(userId, startDate, endDate, jobTag);
+          if (!startDate) {
+            rawPreRangeActivity = await activityMethod.getPreJobRangeActivity(userId, jobTag) //J
+          } else {
+            rawPreRangeActivity = await activityMethod.getPreDateJobRangeActivity(userId, startDate, endDate, jobTag); //DJ
+          }
         } else {
-          rawPreRangeActivity = await activityMethod.getPreRangeActivity(userId, startDate, endDate, jobTag, skillTag);
+          if (!startDate) {
+            rawPreRangeActivity = await activityMethod.getJobSkillRangeActivity(userId, jobTag, skillTag); //JS
+          } else {
+            rawPreRangeActivity = await activityMethod.getPreRangeActivity(userId, startDate, endDate, jobTag, skillTag); //DJS
+          }
         }
       }
 
@@ -316,7 +336,7 @@ module.exports = {
       const activityIdList = activityList.map(data => data.id);
       const completeList = await cardMethod.getCompleteList(activityIdList);
 
-      for(let complete of completeList) {
+      for (let complete of completeList) {
         const idx = activityIdList.indexOf(complete.ActivityId);
         activityIdList.splice(idx, 1);
       }
