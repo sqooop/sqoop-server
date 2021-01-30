@@ -15,8 +15,8 @@ const upload = multer({
             console.log("split original : " + file.originalname.split('.').pop());
 
             cb(null, 'images/origin/' + Date.now() + '.' + file.originalname.split('.').pop()); // 이름 설정
-            // file.originalname.split('.').pop() -> 이 구문은 파일의 확장자만 따온 것!!
         }
-    })
+    }),
+    // limits: { fileSize: 5 * 1024 * 1024 }, // 파일 제한 5메가
 });
 module.exports = upload;

@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 const {
-    User, 
+    User,
     Education
 } = require('../models');
 
@@ -25,7 +25,17 @@ module.exports = {
                 email,
                 password: hashedPassword,
                 userName,
-                salt
+                salt,
+                // 여기부터 마이페이지로 인한 추가정보
+                profileImg: "",
+                birthday: "",
+                phone: "",
+                sns: "",
+                jobBig: "",
+                jobSmall: "",
+                skillBig: "",
+                skillSmall: "",
+                introduce: "",
             });
             return user;
         } catch (err) {
@@ -38,9 +48,9 @@ module.exports = {
                 where: {
                     id: UserId
                 },
-                attributes: [
-                    'email', 'userName'
-                ],
+                attributes: {
+                    exclude: ['id', 'password', 'salt']
+                },
                 include: [{
                     model: Education,
                     attributes: ['school', 'startDate', 'endDate', 'major'],
@@ -51,5 +61,40 @@ module.exports = {
             throw err;
         }
     },
-
+    updateMyPage: async (
+        UserId,
+        userName,
+        profileImg,
+        birthday,
+        phone,
+        sns,
+        jobBig,
+        jobSmall,
+        skillBig,
+        skillSmall,
+        introduce) => {
+        try {
+            await User.update({
+                userName,
+                profileImg,
+                birthday,
+                phone,
+                sns,
+                jobBig,
+                jobSmall,
+                skillBig,
+                skillSmall,
+                introduce
+            }, 
+            {
+                where: {
+                  id: UserId  
+                }
+            });
+            
+            return "마이페이지 수정 완료";
+        } catch (err) {
+            throw err;
+        }
+    },
 }

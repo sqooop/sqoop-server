@@ -49,20 +49,62 @@ module.exports = {
     ActivityId
   ) => {
     try {
-      const updatedActivity = await Activity.update({
-        title,
-        startDate,
-        endDate,
-        group,
-        summary,
-        imageUrl,
-        fileUrl,
-        fileName,
-      }, {
-        where: {
-          id: ActivityId
-        }
-      });
+      let updatedActivity;
+      if (imageUrl == "" && fileUrl == "") {
+        updatedActivity = await Activity.update({
+          title,
+          startDate,
+          endDate,
+          group,
+          summary,
+        }, {
+          where: {
+            id: ActivityId
+          }
+        });
+      } else if (imageUrl == "") {
+        updatedActivity = await Activity.update({
+          title,
+          startDate,
+          endDate,
+          group,
+          summary,
+          fileUrl,
+          fileName,
+        }, {
+          where: {
+            id: ActivityId
+          }
+        });
+      } else if (fileUrl == "") {
+        updatedActivity = await Activity.update({
+          title,
+          startDate,
+          endDate,
+          group,
+          summary,
+          imageUrl,
+        }, {
+          where: {
+            id: ActivityId
+          }
+        });
+      } else {
+        updatedActivity = await Activity.update({
+          title,
+          startDate,
+          endDate,
+          group,
+          summary,
+          imageUrl,
+          fileUrl,
+          fileName,
+        }, {
+          where: {
+            id: ActivityId
+          }
+        });
+      }
 
       return "활동 정보 수정 완료";
     } catch (err) {
@@ -173,15 +215,15 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.and]: [{
-            startDate: {
-              [Op.gte]: startDate
-            }
-          },
-          {
-            endDate: {
-              [Op.lte]: endDate
-            }
-          },
+              startDate: {
+                [Op.gte]: startDate
+              }
+            },
+            {
+              endDate: {
+                [Op.lte]: endDate
+              }
+            },
           ]
         },
         attributes: ['id'],
@@ -189,23 +231,23 @@ module.exports = {
           model: Hashtag,
           where: {
             [Op.or]: [{
-              [Op.and]: [{
-                isJob: 1
-              }, {
-                content: {
-                  [Op.in]: jobTag
-                }
-              }]
-            },
-            {
-              [Op.and]: [{
-                isJob: 0
-              }, {
-                content: {
-                  [Op.in]: skillTag
-                }
-              }]
-            }
+                [Op.and]: [{
+                  isJob: 1
+                }, {
+                  content: {
+                    [Op.in]: jobTag
+                  }
+                }]
+              },
+              {
+                [Op.and]: [{
+                  isJob: 0
+                }, {
+                  content: {
+                    [Op.in]: skillTag
+                  }
+                }]
+              }
             ]
           }
         }]
@@ -223,15 +265,15 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.and]: [{
-            startDate: {
-              [Op.gte]: startDate
-            }
-          },
-          {
-            endDate: {
-              [Op.lte]: endDate
-            }
-          },
+              startDate: {
+                [Op.gte]: startDate
+              }
+            },
+            {
+              endDate: {
+                [Op.lte]: endDate
+              }
+            },
           ]
         },
         attributes: ['id']
@@ -249,15 +291,15 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.and]: [{
-            startDate: {
-              [Op.gte]: startDate
-            }
-          },
-          {
-            endDate: {
-              [Op.lte]: endDate
-            }
-          },
+              startDate: {
+                [Op.gte]: startDate
+              }
+            },
+            {
+              endDate: {
+                [Op.lte]: endDate
+              }
+            },
           ]
         },
         attributes: ['id'],
@@ -288,15 +330,15 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.and]: [{
-            startDate: {
-              [Op.gte]: startDate
-            }
-          },
-          {
-            endDate: {
-              [Op.lte]: endDate
-            }
-          },
+              startDate: {
+                [Op.gte]: startDate
+              }
+            },
+            {
+              endDate: {
+                [Op.lte]: endDate
+              }
+            },
           ]
         },
         attributes: ['id'],
@@ -461,9 +503,16 @@ module.exports = {
       const monthlyActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.and]: [
-            { startDate: { [Op.lte]: startDateComparement } },
-            { endDate: { [Op.gte]: endDateComparement } },
+          [Op.and]: [{
+              startDate: {
+                [Op.lte]: startDateComparement
+              }
+            },
+            {
+              endDate: {
+                [Op.gte]: endDateComparement
+              }
+            },
           ]
         },
         attributes: [

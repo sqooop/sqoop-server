@@ -1,14 +1,13 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
 const {
   sequelize
 } = require('./models');
 const cors = require('cors');
 
-sequelize.sync({ alter: true })
+sequelize.sync({ })
   .then(() => {
     console.log('데이터베이스 연결 성공.');
   })
@@ -16,16 +15,11 @@ sequelize.sync({ alter: true })
     console.error(error);
   })
 
-var indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index');
 
-var app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+const app = express();
 
 app.use(cors());
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({
   extended: false

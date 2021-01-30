@@ -10,9 +10,4 @@ router.use('/hashtag', auth.checkToken, require('./hashtag'));
 router.use('/mypage', auth.checkToken, require('./mypage'));
 // router.use('/multer', require('./multer'));
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
 module.exports = router;

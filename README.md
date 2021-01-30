@@ -1,15 +1,64 @@
 # Sqoop-Server
 
+## 🙋‍♂️ Profile
+|이름|<h3>오승재</h3>|<h3>임찬기</h3>|
+|--|--|--|
+| |<img width="250px" alt="Image" src="https://user-images.githubusercontent.com/69755603/104560591-6f22ec00-5689-11eb-80d3-9c557fda47f4.png">|<img width="250px" alt="Image" src="https://user-images.githubusercontent.com/69755603/104560588-6d592880-5689-11eb-827b-ffe129c2514c.png">| 
+|역할|리드 서버 개발자|서버 개발자|
+|Github|<a href="https://github.com/oh980225">oh980225</a>|<a href="https://github.com/Lim-Changi">Lim-Changi</a>|
+
+
 ## ⚙ Dependencies module
 
-<p align="center">
-  <img width="504" alt="스크린샷 2021-01-04 오후 10 09 24" src="https://user-images.githubusercontent.com/69755603/103541194-650d2a80-4ede-11eb-9409-2407e36dde2e.png">
-</p>
+~~~yaml
+  "dependencies": {
+    "aws-sdk": "^2.817.0",
+    "clean-css": "~4.1.11",
+    "constantinople": "~3.1.1",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "install": "^0.13.0",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0"
+  }
+~~~
 
 ## 🔗 ER Diagram
 
 <p align="center">
-  <img width="500px" alt="DB" src="https://user-images.githubusercontent.com/33858991/103500700-36b42e80-4e8f-11eb-82d1-684fd375c610.PNG">
+  <img width="550px" alt="DB" src="https://user-images.githubusercontent.com/33858991/104153030-9dec5880-5424-11eb-811f-2217e0b98120.PNG">
+</p>
+
+## 👨🏻‍🤝‍👨🏻 Database Relationship
+
+```js
+// 1 : N 관계 User : Activity
+db.User.hasMany(db.Activity, { onDelete: 'cascade' });
+db.Activity.belongsTo(db.User);
+
+// 1 : N 관계 User : Education
+db.User.hasMany(db.Education, { onDelete: 'cascade' });
+db.Education.belongsTo(db.User);
+
+// 1 : N 관계 Activity : QuestionCard
+db.Activity.hasMany(db.QuestionCard, { onDelete: 'cascade' });
+db.QuestionCard.belongsTo(db.Activity);
+
+// 1 : N 관계 Activity : Hashtag
+db.Activity.hasMany(db.Hashtag, { onDelete: 'cascade' });
+db.Hashtag.belongsTo(db.Activity);
+```
+
+## 🧱 Server Architecture
+<p align="center">
+  <img width="900px" alt="Architecture" src="https://user-images.githubusercontent.com/69755603/104559074-2ec26e80-5687-11eb-8eb2-5c17ff921453.png">
 </p>
 
 ## 📃 핵심 기능 설명
@@ -27,8 +76,6 @@
 |GET|모아보기에서 조건에 따라서 활동을 필터링해서 모아보기|
 
 ## 🤝 역할 분담
-
----
 
 <h2> Together </h2>
 
@@ -58,6 +105,7 @@
 - 즐겨찾기 활동 전체 **[GET]**
 - 유저별 전체 해시테그 **[GET]**
 - 활동 필터링 모아보기 **[GET]**
+- 아키텍쳐 작성
 
 ---
 
