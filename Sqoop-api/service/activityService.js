@@ -279,7 +279,7 @@ module.exports = {
           console.log(rawPreRangeActivity);
         } else {
           if (!startDate) {
-            rawPreRangeActivity = await activityMethod.getPreSkillRangeActivity(userId, jobTag) //S
+            rawPreRangeActivity = await activityMethod.getPreSkillRangeActivity(userId, skillTag) //S
           } else {
             rawPreRangeActivity = await activityMethod.getPreDateSkillRangeActivity(userId, startDate, endDate, skillTag); //DS
           }
@@ -293,7 +293,7 @@ module.exports = {
           }
         } else {
           if (!startDate) {
-            rawPreRangeActivity = await activityMethod.getJobSkillRangeActivity(userId, jobTag, skillTag); //JS
+            rawPreRangeActivity = await activityMethod.getPreJobSkillRangeActivity(userId, jobTag, skillTag); //JS
           } else {
             rawPreRangeActivity = await activityMethod.getPreRangeActivity(userId, startDate, endDate, jobTag, skillTag); //DJS
           }

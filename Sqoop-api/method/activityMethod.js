@@ -215,15 +215,15 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.and]: [{
-              startDate: {
-                [Op.gte]: startDate
-              }
-            },
-            {
-              endDate: {
-                [Op.lte]: endDate
-              }
-            },
+            startDate: {
+              [Op.gte]: startDate
+            }
+          },
+          {
+            endDate: {
+              [Op.lte]: endDate
+            }
+          },
           ]
         },
         attributes: ['id'],
@@ -231,23 +231,23 @@ module.exports = {
           model: Hashtag,
           where: {
             [Op.or]: [{
-                [Op.and]: [{
-                  isJob: 1
-                }, {
-                  content: {
-                    [Op.in]: jobTag
-                  }
-                }]
-              },
-              {
-                [Op.and]: [{
-                  isJob: 0
-                }, {
-                  content: {
-                    [Op.in]: skillTag
-                  }
-                }]
-              }
+              [Op.and]: [{
+                isJob: 1
+              }, {
+                content: {
+                  [Op.in]: jobTag
+                }
+              }]
+            },
+            {
+              [Op.and]: [{
+                isJob: 0
+              }, {
+                content: {
+                  [Op.in]: skillTag
+                }
+              }]
+            }
             ]
           }
         }]
@@ -265,15 +265,15 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.and]: [{
-              startDate: {
-                [Op.gte]: startDate
-              }
-            },
-            {
-              endDate: {
-                [Op.lte]: endDate
-              }
-            },
+            startDate: {
+              [Op.gte]: startDate
+            }
+          },
+          {
+            endDate: {
+              [Op.lte]: endDate
+            }
+          },
           ]
         },
         attributes: ['id']
@@ -291,15 +291,15 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.and]: [{
-              startDate: {
-                [Op.gte]: startDate
-              }
-            },
-            {
-              endDate: {
-                [Op.lte]: endDate
-              }
-            },
+            startDate: {
+              [Op.gte]: startDate
+            }
+          },
+          {
+            endDate: {
+              [Op.lte]: endDate
+            }
+          },
           ]
         },
         attributes: ['id'],
@@ -330,15 +330,15 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.and]: [{
-              startDate: {
-                [Op.gte]: startDate
-              }
-            },
-            {
-              endDate: {
-                [Op.lte]: endDate
-              }
-            },
+            startDate: {
+              [Op.gte]: startDate
+            }
+          },
+          {
+            endDate: {
+              [Op.lte]: endDate
+            }
+          },
           ]
         },
         attributes: ['id'],
@@ -403,7 +403,7 @@ module.exports = {
           where: {
             [Op.or]: [{
               [Op.and]: [{
-                isJob: 0
+                isJob: 1
               }, {
                 content: {
                   [Op.in]: jobTag
@@ -504,15 +504,15 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.and]: [{
-              startDate: {
-                [Op.lte]: startDateComparement
-              }
-            },
-            {
-              endDate: {
-                [Op.gte]: endDateComparement
-              }
-            },
+            startDate: {
+              [Op.lte]: startDateComparement
+            }
+          },
+          {
+            endDate: {
+              [Op.gte]: endDateComparement
+            }
+          },
           ]
         },
         attributes: [
