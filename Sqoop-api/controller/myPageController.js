@@ -44,5 +44,12 @@ module.exports = {
     );
     
     return updatedMyPage;
+  },
+  testEducation: async (req, res) => {
+    const UserId = req.decoded.id;
+    const { education } = req.body;
+    const updateEducation = await myPageService.testEducation(UserId, education, res);
+
+    return updateEducation;
   }
 }
