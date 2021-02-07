@@ -1,8 +1,10 @@
 const crypto = require('crypto');
 const {
     User,
-    Education
+    Education,
+    sequelize
 } = require('../models');
+let transaction;
 
 module.exports = {
     readOneEmail: async (email) => {
@@ -12,6 +14,7 @@ module.exports = {
                     email
                 }
             });
+
             return alreadyEmail;
         } catch (err) {
             throw err;
@@ -19,6 +22,7 @@ module.exports = {
     },
     createUser: async (email, userName, password) => {
         try {
+            transaction = await sequelize.transaction();
             const salt = crypto.randomBytes(64).toString('base64');
             const hashedPassword = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('base64');
             const user = await User.create({
@@ -36,9 +40,14 @@ module.exports = {
                 skillBig: "",
                 skillSmall: "",
                 introduce: "",
+            }, {
+                transaction
             });
+            await transaction.commit();
+
             return user;
         } catch (err) {
+            if (transaction) await transaction.rollback();
             throw err;
         }
     },
@@ -56,6 +65,7 @@ module.exports = {
                     attributes: ['school', 'startDate', 'endDate', 'major'],
                 }]
             });
+
             return myPageInfo;
         } catch (err) {
             throw err;
@@ -74,6 +84,7 @@ module.exports = {
         skillSmall,
         introduce) => {
         try {
+            transaction = sequelize.transaction();
             await User.update({
                 userName,
                 profileImg,
@@ -85,15 +96,17 @@ module.exports = {
                 skillBig,
                 skillSmall,
                 introduce
-            }, 
-            {
+            }, {
                 where: {
-                  id: UserId  
-                }
+                    id: UserId
+                },
+                transaction
             });
-            
+            await transaction.commit();
+
             return "마이페이지 수정 완료";
         } catch (err) {
+            if(transaction) await transaction.rollback();
             throw err;
         }
     },
