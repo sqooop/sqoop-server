@@ -73,22 +73,18 @@ module.exports = {
     },
     updateMyPage: async (
         UserId,
-        userName,
         profileImg,
-        birthday,
         phone,
         sns,
         jobBig,
         jobSmall,
         skillBig,
         skillSmall,
-        introduce) => {
+        introduce,
+        transaction) => {
         try {
-            transaction = sequelize.transaction();
             await User.update({
-                userName,
                 profileImg,
-                birthday,
                 phone,
                 sns,
                 jobBig,
@@ -102,11 +98,9 @@ module.exports = {
                 },
                 transaction
             });
-            await transaction.commit();
 
             return "마이페이지 수정 완료";
         } catch (err) {
-            if(transaction) await transaction.rollback();
             throw err;
         }
     },
