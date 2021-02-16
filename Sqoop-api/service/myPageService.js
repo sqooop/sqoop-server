@@ -32,6 +32,10 @@ module.exports = {
     res
   ) => {
     try {
+      if (!phone || !sns || !jobBig || !jobSmall || !skillBig || !skillSmall || !introduce || !education) {
+        console.log('필요값 누락');
+        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      }
       transaction = await sequelize.transaction();
       const updatedMyPage = await userMethod.updateMyPage(
         UserId,
