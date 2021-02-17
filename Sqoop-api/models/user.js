@@ -17,17 +17,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(200),
       allowNull: false,
     },
-    // 여기부터 마이페이지 정보
-    profileImg: {
-      type: DataTypes.STRING(100),
-      allowNull: true
-    },
     birthday: {
       type: DataTypes.STRING(10),
       allowNull: true
     },
     phone: {
       type: DataTypes.STRING(20),
+      allowNull: true
+    },
+    // 여기부터 마이페이지 정보
+    profileImg: {
+      type: DataTypes.STRING(100),
       allowNull: true
     },
     sns: {

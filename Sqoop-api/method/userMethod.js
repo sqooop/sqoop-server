@@ -17,7 +17,7 @@ module.exports = {
             throw err;
         }
     },
-    createUser: async (email, userName, password) => {
+    createUser: async (email, userName, password, birthday, phoneNumber) => {
         try {
             const salt = crypto.randomBytes(64).toString('base64');
             const hashedPassword = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('base64');
@@ -26,10 +26,10 @@ module.exports = {
                 password: hashedPassword,
                 userName,
                 salt,
+                birthday,
+                phone: phoneNumber,
                 // 여기부터 마이페이지로 인한 추가정보
                 profileImg: "",
-                birthday: "",
-                phone: "",
                 sns: "",
                 jobBig: "",
                 jobSmall: "",
@@ -85,16 +85,44 @@ module.exports = {
                 skillBig,
                 skillSmall,
                 introduce
-            }, 
-            {
-                where: {
-                  id: UserId  
-                }
-            });
-            
+            },
+                {
+                    where: {
+                        id: UserId
+                    }
+                });
+
             return "마이페이지 수정 완료";
         } catch (err) {
             throw err;
         }
     },
+    findUserEmail: async (userName, birthday, phoneNumber) => {
+        try {
+            const userEmail = await User.findOne({
+                where: {
+                    userName: userName,
+                    birthday: birthday,
+                    phone: phoneNumber
+                },
+                attributes: ['email']
+            });
+            return userEmail;
+        } catch (err) {
+            throw err;
+        }
+    },
+    resetPassword: async (email, salt, hashedPassword) => {
+        try {
+            await User.update({
+                salt, password: hashedPassword
+            }, {
+                where: { email }
+            });
+            return "비밀번호 리셋 성공"
+        } catch (err) {
+            throw err;
+        }
+
+    }
 }

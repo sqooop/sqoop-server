@@ -30,6 +30,10 @@ module.exports = {
   UPDATE_USER_FAIL: "사용자 업데이트 실패",
   DELETE_USER_SUCCESS: "사용자 삭제 성공",
   DELETE_USER_FAIL: "사용자 삭제 실패",
+  FIND_EMAIL_SUCCESS: "사용자 이메일 찾기 성공",
+  FIND_EMAIL_FAIL: "사용자 이메일 찾기 실패",
+  RESET_PASSWORD_SUCCESS: "사용자 비밀번호 초기화 성공",
+  RESET_PASSWORD_FAIL: "사용자 비밀번호 초기화 실패",
 
   /* Mypage */
   GET_MY_PAGE_SUCCESS: '마이페이지 조회 성공',
