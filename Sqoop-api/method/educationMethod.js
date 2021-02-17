@@ -1,23 +1,33 @@
 const {
-  Education
+  Education,
+  sequelize
 } = require('../models');
 
+let transaction;
+
 module.exports = {
-  deleteAllEducation: async (UserId) => {
+  deleteAllEducation: async (UserId, transaction) => {
     try {
       await Education.destroy({
         where: {
           UserId
-        }
+        },
+        transaction
       });
+
       return "학력 삭제 완료";
     } catch (err) {
       throw err;
     }
   },
-  updateEducation: async (education) => {
+  updateEducation: async (education, transaction) => {
     try {
-      const educationArr = await Education.bulkCreate(education);
+      let educationArr;
+      if (education) {
+        educationArr = await Education.bulkCreate(education, {
+          transaction
+        });
+      }
       return educationArr;
     } catch (err) {
       throw err;

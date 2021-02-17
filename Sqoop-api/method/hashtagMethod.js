@@ -1,16 +1,21 @@
 const {
-    Hashtag
+    Hashtag, sequelize
 } = require('../models');
+let transaction;
 
 module.exports = {
     createHashtag: async (hashtagList) => {
         try {
+            transaction = await sequelize.transaction();
             //hashtagList : actId,content,isJob
-            const newHashtag = await Hashtag.bulkCreate(
-                hashtagList
-            );
+            const newHashtag = await Hashtag.bulkCreate(hashtagList, {
+                transaction
+            });
+            await transaction.commit();
+
             return newHashtag;
         } catch (err) {
+            if(transaction) await transaction.rollback();
             throw err;
         }
     },
@@ -62,13 +67,18 @@ module.exports = {
     },
     deleteHashtag: async (ActivityId) => {
         try {
+            transaction = await sequelize.transaction();
             const deleted = await Hashtag.destroy({
                 where: {
                     ActivityId
-                }
+                },
+                transaction
             });
+            await transaction.commit();
+
             return deleted;
         } catch (err) {
+            if(transaction) await transaction.rollback();
             throw err;
         }
 

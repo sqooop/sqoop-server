@@ -8,8 +8,6 @@ module.exports = {
   },
   updateMyPage: async (req, res) => {
     const {
-      userName,
-      birthday,
       phone,
       sns,
       jobBig,
@@ -29,9 +27,7 @@ module.exports = {
 
     const updatedMyPage = await myPageService.updateMyPage(
       UserId,
-      userName,
       profileImg,
-      birthday,
       phone,
       sns,
       jobBig,
@@ -44,5 +40,12 @@ module.exports = {
     );
     
     return updatedMyPage;
-  }
+  },
+  // testEducation: async (req, res) => {
+  //   const UserId = req.decoded.id;
+  //   const { education } = req.body;
+  //   const updateEducation = await myPageService.testEducation(UserId, education, res);
+
+  //   return updateEducation;
+  // }
 }
