@@ -58,6 +58,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT(),
       allowNull: true
     },
+    emailSend: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    smsSend: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {
     freezeTableName: true,
     timestamps: false,

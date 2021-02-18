@@ -58,7 +58,7 @@ module.exports = {
                     id: UserId
                 },
                 attributes: {
-                    exclude: ['password', 'salt']
+                    exclude: ['password', 'salt', 'emailSend', 'smsSend']
                 },
                 include: [{
                     model: Education,
