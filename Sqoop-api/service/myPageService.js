@@ -11,15 +11,35 @@ let transaction;
 module.exports = {
   getMyPage: async (UserId, res) => {
     try {
-      const myPageInfo = await userMethod.getMyPage(UserId);
+      transaction = await sequelize.transaction();
+      let myPageInfo = await userMethod.getMyPage(UserId, transaction);
+      if(myPageInfo.profileEmail == null) {
+        await userMethod.updateMyPage(
+          myPageInfo.id,
+          myPageInfo.email,
+          myPageInfo.profileImg,
+          myPageInfo.phone,
+          myPageInfo.sns,
+          myPageInfo.jobBig,
+          myPageInfo.jobSmall,
+          myPageInfo.skillBig,
+          myPageInfo.skillSmall,
+          myPageInfo.introduce,
+          transaction);
+          myPageInfo = await userMethod.getMyPage(UserId, transaction);
+      }
+      transaction.commit();
+      
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_MY_PAGE_SUCCESS, myPageInfo));
     } catch (err) {
       console.error(err);
+      if(transaction) await transaction.rollback();
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_MY_PAGE_FAIL));
     }
   },
   updateMyPage: async (
     UserId,
+    profileEmail,
     profileImg,
     phone,
     sns,
@@ -32,7 +52,7 @@ module.exports = {
     res
   ) => {
     try {
-      if (!phone || !sns || !jobBig || !jobSmall || !skillBig || !skillSmall || !introduce || !education) {
+      if (!profileEmail || !phone || !sns || !jobBig || !jobSmall || !skillBig || !skillSmall || !introduce) {
         console.log('필요값 누락');
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       }
@@ -40,6 +60,7 @@ module.exports = {
       transaction = await sequelize.transaction();
       const updatedMyPage = await userMethod.updateMyPage(
         UserId,
+        profileEmail,
         profileImg,
         phone,
         sns,

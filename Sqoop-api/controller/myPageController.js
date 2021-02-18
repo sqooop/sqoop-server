@@ -8,6 +8,7 @@ module.exports = {
   },
   updateMyPage: async (req, res) => {
     const {
+      profileEmail,
       phone,
       sns,
       jobBig,
@@ -27,6 +28,7 @@ module.exports = {
 
     const updatedMyPage = await myPageService.updateMyPage(
       UserId,
+      profileEmail,
       profileImg,
       phone,
       sns,

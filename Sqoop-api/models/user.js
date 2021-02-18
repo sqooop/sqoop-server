@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
     // 여기부터 마이페이지 정보
+    profileEmail: {
+      type: DataTypes.STRING(30),
+      allowNull: true
+    },
     profileImg: {
       type: DataTypes.STRING(100),
       allowNull: true

@@ -51,19 +51,20 @@ module.exports = {
             throw err;
         }
     },
-    getMyPage: async (UserId) => {
+    getMyPage: async (UserId, transaction) => {
         try {
             const myPageInfo = await User.findOne({
                 where: {
                     id: UserId
                 },
                 attributes: {
-                    exclude: ['id', 'password', 'salt']
+                    exclude: ['password', 'salt']
                 },
                 include: [{
                     model: Education,
                     attributes: ['school', 'startDate', 'endDate', 'major'],
-                }]
+                }],
+                transaction
             });
 
             return myPageInfo;
@@ -73,6 +74,7 @@ module.exports = {
     },
     updateMyPage: async (
         UserId,
+        profileEmail,
         profileImg,
         phone,
         sns,
@@ -84,6 +86,7 @@ module.exports = {
         transaction) => {
         try {
             await User.update({
+                profileEmail,
                 profileImg,
                 phone,
                 sns,
@@ -92,12 +95,12 @@ module.exports = {
                 skillBig,
                 skillSmall,
                 introduce
-            },
-                {
-                    where: {
-                        id: UserId
-                    }
-                });
+            }, {
+                where: {
+                    id: UserId
+                },
+                transaction
+            });
 
             return "마이페이지 수정 완료";
         } catch (err) {
@@ -122,9 +125,12 @@ module.exports = {
     resetPassword: async (email, salt, hashedPassword) => {
         try {
             await User.update({
-                salt, password: hashedPassword
+                salt,
+                password: hashedPassword
             }, {
-                where: { email }
+                where: {
+                    email
+                }
             });
             return "비밀번호 리셋 성공"
         } catch (err) {
