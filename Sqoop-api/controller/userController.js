@@ -20,5 +20,27 @@ module.exports = {
         const { email } = req.body;
         const resetPW = await userService.resetPassword(email, res);
         return resetPW;
-    }
+    },
+    getSetting: async (req, res) => {
+        return null;
+    },
+    checkEmail: async (req, res) => {
+        return null;
+
+    },
+    checkSms: async (req, res) => {
+        return null;
+
+    },
+    checkPassword: async (req, res) => {
+        return null;
+
+    },
+    changePassword: async (req, res) => {
+        return null;
+
+    },
+    withdrawUser: async (req, res) => {
+        return null;
+    },
 }
