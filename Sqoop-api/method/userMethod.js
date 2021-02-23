@@ -3,6 +3,7 @@ const {
     User,
     Education
 } = require('../models');
+const { checkPhone } = require('../service/userService');
 
 module.exports = {
     readOneEmail: async (email) => {
@@ -136,5 +137,73 @@ module.exports = {
             throw err;
         }
 
+    },
+    getUserSetting: async (userId) => {
+        try {
+            const userSettingData = await User.findOne({
+                where: {
+                    id: userId
+                },
+                attributes: ['email', 'phone', 'marketing']
+            })
+            return userSettingData
+        } catch (err) {
+            throw err;
+        }
+    },
+    setMarketing: async (userId, boolean) => {
+        try {
+            let checked;
+            if (boolean === true) {
+                checked = 1;
+            } else {
+                checked = 0;
+            }
+            await User.update({
+                marketing: checked
+            }, {
+                where: { id: userId }
+            })
+        } catch (err) {
+            throw err;
+        }
+    },
+    getUserPW: async (userId) => {
+        try {
+            const userPW = await User.findOne({
+                where: {
+                    id: userId
+                },
+                attributes: ['email', 'salt', 'password']
+            })
+            return userPW
+        } catch (err) {
+            throw err;
+        }
+    },
+    changePassword: async (userId, salt, hashedPassword) => {
+        try {
+            await User.update({
+                salt, password: hashedPassword
+            }, {
+                where: { id: userId }
+            });
+            return "비밀번호 변경 성공"
+        } catch (err) {
+            throw err;
+        }
+
+    },
+    deleteAccount: async (userId) => {
+        try {
+            await User.destroy({
+                where: {
+                    id: userId
+                }
+            })
+            return "계정 삭제 성공"
+        } catch (err) {
+            throw err;
+        }
     }
 }

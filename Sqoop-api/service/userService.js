@@ -155,7 +155,115 @@ module.exports = {
             console.log(err);
             return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.EMAIL_CHECK_FAIL));
         }
+    },
+    getUserSetting: async (userId, res) => {
+        try {
+            const userSetting = await userMethod.getUserSetting(userId);
+            if (!userSetting) {
+                throw err;
+            } else {
+                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_USER_SET_SUCCESS, { userSetting }));
+            }
+        } catch (err) {
+            console.log(err);
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_USER_SET_FAIL));
+        }
+    },
+    changePassword: async (userId, inputPW, newPW, res) => {
+        if (!inputPW || !newPW) {
+            console.log('필요값 누락');
+            return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+        }
+        try {
+            const userPW = await userMethod.getUserPW(userId);
+            if (!userPW) {
+                throw err;
+            }
+            const { password, salt } = userPW;
+            const passwordCompare = await crypto.pbkdf2Sync(inputPW, salt, 10000, 64, 'sha512').toString('base64');
+            if (passwordCompare !== password) {
+                console.log('비밀번호가 일치하지 않음');
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.MISS_MATCH_PW));
+            } else {
+                const newSalt = crypto.randomBytes(64).toString('base64');
+                const newHashedPassword = crypto.pbkdf2Sync(newPW, newSalt, 10000, 64, 'sha512').toString('base64');
+                await userMethod.changePassword(userId, newSalt, newHashedPassword);
+                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.CHANGE_PW_SUCCESS));
+            }
+
+
+        } catch (err) {
+            console.log(err);
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.CHANGE_PW_FAIL));
+        }
+    },
+    setMarketing: async (userId, checkMarketing, res) => {
+        try {
+            let boxChecked;
+            if (checkMarketing === undefined || checkMarketing === false) {
+                boxChecked = false;
+            } else {
+                boxChecked = true;
+            }
+            await userMethod.setMarketing(userId, boxChecked);
+            return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SET_MARKETING_SUCCESS));
+        } catch (err) {
+            console.log(err);
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.SET_MARKETING_FAIL));
+        }
+    },
+    deleteAccount: async (userId, reason, inputPW, res) => {
+        try {
+            const userPW = await userMethod.getUserPW(userId);
+            if (!userPW) {
+                throw err;
+            }
+            const { email, password, salt } = userPW;
+
+            const passwordCompare = await crypto.pbkdf2Sync(inputPW, salt, 10000, 64, 'sha512').toString('base64');
+            if (passwordCompare !== password) {
+                console.log('비밀번호가 일치하지 않음');
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.MISS_MATCH_PW));
+            } else {
+                const { gMail, gPassword } = require('../config/gmail.json');
+                const smtpTransport = nodeMailer.createTransport({
+                    service: "Gmail",
+                    auth: {
+                        user: gMail,
+                        pass: gPassword
+                    },
+                    tls: {
+                        rejectUnauthorized: false
+                    }
+                });
+
+                let mailOptions = {
+                    from: gMail,
+                    to: gMail,
+                    subject: `${email} 님이 Sqoop을 탈퇴하였습니다`,
+                    text: reason
+                };
+
+
+                await smtpTransport.sendMail(mailOptions, async (err) => {
+                    if (err) {
+                        console.log('nodeMailer Error');
+                        smtpTransport.close();
+                        throw err;
+                    } else {
+                        await userMethod.deleteAccount(userId);
+                        smtpTransport.close();
+                        return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.DELETE_ACCOUNT_SUCCESS));
+                    }
+                });
+            }
+
+        } catch (err) {
+            console.log(err);
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.DELETE_ACCOUNT_FAIL));
+        }
     }
+
 
 
 }

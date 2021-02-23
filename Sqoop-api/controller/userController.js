@@ -1,3 +1,4 @@
+const user = require('../models/user');
 const userService = require('../service/userService');
 
 module.exports = {
@@ -30,5 +31,29 @@ module.exports = {
         const { phone } = req.query;
         const checkPhone = await userService.checkPhone(phone, res);
         return checkPhone;
-    }
+    },
+    getUserSetting: async (req, res) => {
+        const userId = req.decoded.id;
+        const getUserSetting = await userService.getUserSetting(userId, res);
+        return getUserSetting;
+    },
+    changePassword: async (req, res) => {
+        const userId = req.decoded.id;
+        const { inputPW, newPW } = req.body;
+        const changePassword = await userService.changePassword(userId, inputPW, newPW, res);
+        return changePassword;
+    },
+    setMarketing: async (req, res) => {
+        const userId = req.decoded.id;
+        const { checkMarketing } = req.body;
+        const setMarketing = await userService.setMarketing(userId, checkMarketing, res);
+        return setMarketing;
+    },
+    deleteAccount: async (req, res) => {
+        const userId = req.decoded.id;
+        const { reason, inputPW } = req.body;
+        const deleteAccount = await userService.deleteAccount(userId, reason, inputPW, res);
+        return deleteAccount;
+    },
+
 }

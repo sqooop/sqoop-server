@@ -39,6 +39,14 @@ module.exports = {
   PHONE_CHECK_FAIL: "핸드폰 중복체크 실패",
   EMAIL_CHECK_SUCCESS: "이메일 중복체크 성공",
   EMAIL_CHECK_FAIL: "이메일 중복체크 싱패",
+  DELETE_ACCOUNT_SUCCESS: "계정 삭제 성공",
+  DELETE_ACCOUNT_FAIL: "계정 삭제 실패",
+  SET_MARKETING_SUCCESS: "마케팅 수신 설정 성공",
+  SET_MARKETING_FAIL: "마케팅 수신 설정 실패",
+  CHANGE_PW_SUCCESS: "비밀번호 변경 성공",
+  CHANGE_PW_FAIL: "비밀번호 변경 실패",
+  GET_USER_SET_SUCCESS: "유저 계정 설정 조회 성공",
+  GET_USER_SET_FAIL: "유저 계정 설정 조회 실패",
 
 
   /* Mypage */

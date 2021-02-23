@@ -52,8 +52,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     introduce: {
       type: DataTypes.TEXT(),
-      allowNull: true
+      allowNull: true,
     },
+    marketing: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 0,
+      allowNull: false
+    }
+
   }, {
     freezeTableName: true,
     timestamps: false,
