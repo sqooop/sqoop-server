@@ -22,6 +22,7 @@ module.exports = {
         const resetPW = await userService.resetPassword(email, res);
         return resetPW;
     },
+
     checkEmail: async (req, res) => {
         const { email } = req.query;
         const checkEmail = await userService.checkEmail(email, res);
@@ -55,5 +56,6 @@ module.exports = {
         const deleteAccount = await userService.deleteAccount(userId, reason, inputPW, res);
         return deleteAccount;
     },
+
 
 }

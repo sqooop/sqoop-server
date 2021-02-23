@@ -1,9 +1,15 @@
 const crypto = require('crypto');
 const {
     User,
-    Education
+    Education,
+    History,
+    sequelize
 } = require('../models');
+
 const { checkPhone } = require('../service/userService');
+
+let transaction;
+
 
 module.exports = {
     readOneEmail: async (email) => {
@@ -13,6 +19,7 @@ module.exports = {
                     email
                 }
             });
+
             return alreadyEmail;
         } catch (err) {
             throw err;
@@ -32,6 +39,7 @@ module.exports = {
     },
     createUser: async (email, userName, password, birthday, phoneNumber) => {
         try {
+            transaction = await sequelize.transaction();
             const salt = crypto.randomBytes(64).toString('base64');
             const hashedPassword = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('base64');
             const user = await User.create({
@@ -49,26 +57,37 @@ module.exports = {
                 skillBig: "",
                 skillSmall: "",
                 introduce: "",
+            }, {
+                transaction
             });
+            await transaction.commit();
+
             return user;
         } catch (err) {
+            if (transaction) await transaction.rollback();
             throw err;
         }
     },
-    getMyPage: async (UserId) => {
+    getMyPage: async (UserId, transaction) => {
         try {
             const myPageInfo = await User.findOne({
                 where: {
                     id: UserId
                 },
                 attributes: {
-                    exclude: ['id', 'password', 'salt']
+                    exclude: ['password', 'salt', 'emailSend', 'smsSend']
                 },
                 include: [{
                     model: Education,
                     attributes: ['school', 'startDate', 'endDate', 'major'],
-                }]
+                }, {
+                    model: History,
+                    as: 'History',
+                    attributes: ['title', 'date', 'testName', 'score', 'type'],
+                }],
+                transaction
             });
+
             return myPageInfo;
         } catch (err) {
             throw err;
@@ -76,21 +95,20 @@ module.exports = {
     },
     updateMyPage: async (
         UserId,
-        userName,
+        profileEmail,
         profileImg,
-        birthday,
         phone,
         sns,
         jobBig,
         jobSmall,
         skillBig,
         skillSmall,
-        introduce) => {
+        introduce,
+        transaction) => {
         try {
             await User.update({
-                userName,
+                profileEmail,
                 profileImg,
-                birthday,
                 phone,
                 sns,
                 jobBig,
@@ -98,12 +116,12 @@ module.exports = {
                 skillBig,
                 skillSmall,
                 introduce
-            },
-                {
-                    where: {
-                        id: UserId
-                    }
-                });
+            }, {
+                where: {
+                    id: UserId
+                },
+                transaction
+            });
 
             return "마이페이지 수정 완료";
         } catch (err) {
@@ -128,9 +146,12 @@ module.exports = {
     resetPassword: async (email, salt, hashedPassword) => {
         try {
             await User.update({
-                salt, password: hashedPassword
+                salt,
+                password: hashedPassword
             }, {
-                where: { email }
+                where: {
+                    email
+                }
             });
             return "비밀번호 리셋 성공"
         } catch (err) {
