@@ -56,16 +56,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     introduce: {
       type: DataTypes.TEXT(),
-      allowNull: true
+      allowNull: true,
     },
-    emailSend: {
+
+    marketing: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false
-    },
-    smsSend: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
+      defaultValue: 0,
+      allowNull: false
     }
+
+
   }, {
     freezeTableName: true,
     timestamps: false,
