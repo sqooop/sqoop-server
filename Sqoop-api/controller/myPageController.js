@@ -16,7 +16,10 @@ module.exports = {
       skillBig,
       skillSmall,
       introduce,
-      education
+      education,
+      langHistory,
+      certificateHistory,
+      awardHistory
     } = req.body;
 
     const UserId = req.decoded.id;
@@ -38,16 +41,12 @@ module.exports = {
       skillSmall,
       introduce,
       education,
+      langHistory,
+      certificateHistory,
+      awardHistory,
       res
     );
     
     return updatedMyPage;
   },
-  // testEducation: async (req, res) => {
-  //   const UserId = req.decoded.id;
-  //   const { education } = req.body;
-  //   const updateEducation = await myPageService.testEducation(UserId, education, res);
-
-  //   return updateEducation;
-  // }
 }

@@ -28,7 +28,7 @@ module.exports = {
           transaction
         });
       }
-      return educationArr;
+      return "학력 수정 완료";
     } catch (err) {
       throw err;
     }
