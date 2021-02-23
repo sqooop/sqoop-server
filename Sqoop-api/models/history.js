@@ -2,15 +2,15 @@ module.exports = (sequelize, DataTypes) => {
   return sequelize.define('History', {
     title: {
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: true
     },
     date: {
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: true
     },
     testName: {
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: true
     },
     score: {
       type: DataTypes.INTEGER, 

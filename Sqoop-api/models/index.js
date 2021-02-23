@@ -19,7 +19,7 @@ db.Activity = require('./activity')(sequelize, Sequelize);
 db.QuestionCard = require('./questionCard')(sequelize, Sequelize);
 db.Hashtag = require('./hashtag')(sequelize, Sequelize);
 db.Education = require('./education')(sequelize, Sequelize);
-db.History = require('./History')(sequelize, Sequelize);
+db.History = require('./history')(sequelize, Sequelize);
 
 // 1 : N 관계 User : Activity
 db.User.hasMany(db.Activity, { onDelete: 'cascade' });
@@ -30,7 +30,7 @@ db.User.hasMany(db.Education, { onDelete: 'cascade' });
 db.Education.belongsTo(db.User);
 
 // 1 : N 관계 User : History
-db.User.hasMany(db.History, { onDelete: 'cascade' });
+db.User.hasMany(db.History, {as: 'History', foreignKey: 'UserId', onDelete: 'cascade' });
 db.History.belongsTo(db.User);
 
 // 1 : N 관계 Activity : QuestionCard

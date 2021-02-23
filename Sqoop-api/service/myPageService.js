@@ -3,6 +3,7 @@ const responseMessage = require('../modules/responseMessage');
 const statusCode = require('../modules/statusCode');
 const userMethod = require('../method/userMethod');
 const educationMethod = require('../method/educationMethod');
+const historyMethod = require('../method/historyMethod');
 const {
   sequelize
 } = require('../models');
@@ -13,27 +14,29 @@ module.exports = {
     try {
       transaction = await sequelize.transaction();
       let myPageInfo = await userMethod.getMyPage(UserId, transaction);
-      if(myPageInfo.profileEmail == null) {
-        await userMethod.updateMyPage(
-          myPageInfo.id,
-          myPageInfo.email,
-          myPageInfo.profileImg,
-          myPageInfo.phone,
-          myPageInfo.sns,
-          myPageInfo.jobBig,
-          myPageInfo.jobSmall,
-          myPageInfo.skillBig,
-          myPageInfo.skillSmall,
-          myPageInfo.introduce,
-          transaction);
-          myPageInfo = await userMethod.getMyPage(UserId, transaction);
-      }
+      const tempMyPageInfo = myPageInfo.History.map(data => data.get({
+        plain: true
+      }));
+
+      const langHistory = tempMyPageInfo.filter(data => data.type == 1);
+      const certificateHistory = tempMyPageInfo.filter(data => data.type == 2);
+      const awardHistory = tempMyPageInfo.filter(data => data.type == 3);
+
+      myPageInfo = myPageInfo.get({
+        plain: true
+      });
+      delete myPageInfo.History;
+
+      myPageInfo.LangHistory = langHistory;
+      myPageInfo.CertificateHistory = certificateHistory;
+      myPageInfo.AwardHistory = awardHistory;
+
       transaction.commit();
-      
+
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.GET_MY_PAGE_SUCCESS, myPageInfo));
     } catch (err) {
       console.error(err);
-      if(transaction) await transaction.rollback();
+      if (transaction) await transaction.rollback();
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_MY_PAGE_FAIL));
     }
   },
@@ -49,6 +52,9 @@ module.exports = {
     skillSmall,
     introduce,
     education,
+    langHistory,
+    certificateHistory,
+    awardHistory,
     res
   ) => {
     try {
@@ -71,14 +77,66 @@ module.exports = {
         introduce,
         transaction
       );
-      await educationMethod.deleteAllEducation(UserId, transaction);
+
+      const deletedAllEducation = await educationMethod.deleteAllEducation(UserId, transaction);
+      console.log(deletedAllEducation);
+
       if (education) {
         for (let idx in education) {
           education[idx].UserId = UserId;
         }
       }
       const updatedEducation = await educationMethod.updateEducation(education, transaction);
-      
+      console.log(updatedEducation);
+
+      const deletedAllHistory = await historyMethod.deleteAllHistory(UserId, transaction);
+      console.log(deletedAllHistory);
+
+      if (langHistory) {
+        for (let idx in langHistory) {
+          if (!langHistory[idx].title &&
+            !langHistory[idx].date &&
+            !langHistory[idx].testName &&
+            !langHistory[idx].score) {
+            throw "[LangHistory] All NULL ERROR!" 
+          }
+          langHistory[idx].UserId = UserId;
+          langHistory[idx].type = 1;
+        }
+      }
+      const updatedLangHistory = await historyMethod.updateLangHistory(langHistory, transaction);
+      console.log(updatedLangHistory);
+
+      if (certificateHistory) {
+        for (let idx in certificateHistory) {
+          if (!certificateHistory[idx].title &&
+            !certificateHistory[idx].date &&
+            !certificateHistory[idx].testName &&
+            !certificateHistory[idx].score) {
+            throw "[CertificateHistory] All NULL ERROR!" 
+          }
+          certificateHistory[idx].UserId = UserId;
+          certificateHistory[idx].type = 2;
+        }
+      }
+      const updatedCertificateHistory = await historyMethod.updateCertificateHistory(certificateHistory, transaction);
+      console.log(updatedCertificateHistory);
+
+      if (awardHistory) {
+        for (let idx in awardHistory) {
+          if (!awardHistory[idx].title &&
+            !awardHistory[idx].date &&
+            !awardHistory[idx].testName &&
+            !awardHistory[idx].score) {
+            throw "[AwardHistory] All NULL ERROR!" 
+          }
+          awardHistory[idx].UserId = UserId;
+          awardHistory[idx].type = 3;
+        }
+      }
+      const updatedAwardHistory = await historyMethod.updateAwardHistory(awardHistory, transaction);
+      console.log(updatedAwardHistory);
+
       await transaction.commit();
 
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.UPDATE_MY_PAGE_SUCCESS, updatedMyPage));

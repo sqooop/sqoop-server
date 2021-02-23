@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const {
     User,
     Education,
+    History,
     sequelize
 } = require('../models');
 let transaction;
@@ -63,6 +64,10 @@ module.exports = {
                 include: [{
                     model: Education,
                     attributes: ['school', 'startDate', 'endDate', 'major'],
+                }, {
+                    model: History,
+                    as: 'History',
+                    attributes: ['title', 'date', 'testName', 'score', 'type'],
                 }],
                 transaction
             });
