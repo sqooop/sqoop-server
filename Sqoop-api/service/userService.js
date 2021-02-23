@@ -119,6 +119,43 @@ module.exports = {
             console.log(err);
             return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.RESET_PASSWORD_FAIL));
         }
+    },
+    checkPhone: async (phone, res) => {
+        if (!phone) {
+            console.log('필요값 누락');
+            return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+        }
+        try {
+            const alreadyPhone = await userMethod.readOnePhone(phone);
+            if (alreadyPhone) {
+                console.log('이미 존재하는 폰번호');
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_PHONE));
+            } else {
+                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PHONE_CHECK_SUCCESS));
+            }
+        } catch (err) {
+            console.log(err);
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.PHONE_CHECK_FAIL));
+        }
+    },
+    checkEmail: async (email, res) => {
+        if (!email) {
+            console.log('필요값 누락');
+            return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+        }
+        try {
+            const alreadyEmail = await userMethod.readOneEmail(email);
+            if (alreadyEmail) {
+                console.log('이미 존재하는 이메일');
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_ID));
+            } else {
+                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.EMAIL_CHECK_SUCCESS));
+            }
+        } catch (err) {
+            console.log(err);
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.EMAIL_CHECK_FAIL));
+        }
     }
+
 
 }

@@ -17,6 +17,18 @@ module.exports = {
             throw err;
         }
     },
+    readOnePhone: async (phone) => {
+        try {
+            const alreadyPhone = await User.findOne({
+                where: {
+                    phone
+                }
+            });
+            return alreadyPhone;
+        } catch (err) {
+            throw err;
+        }
+    },
     createUser: async (email, userName, password, birthday, phoneNumber) => {
         try {
             const salt = crypto.randomBytes(64).toString('base64');
