@@ -47,6 +47,7 @@ module.exports = {
   CHANGE_PW_FAIL: "비밀번호 변경 실패",
   GET_USER_SET_SUCCESS: "유저 계정 설정 조회 성공",
   GET_USER_SET_FAIL: "유저 계정 설정 조회 실패",
+  NO_EMAIL: '존재하지 않는 이메일',
 
 
   /* Mypage */

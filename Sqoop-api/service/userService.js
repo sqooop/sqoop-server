@@ -79,6 +79,11 @@ module.exports = {
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
         }
         try {
+            let emailExist = userMethod.readOneEmail(userEmail);
+            if (!emailExist) {
+                console.log('존재하지 않는 이메일');
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_EMAIL));
+            }
             const { gMail, gPassword } = require('../config/gmail.json');
             const smtpTransport = nodeMailer.createTransport({
                 service: "Gmail",
