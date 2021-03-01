@@ -58,11 +58,34 @@ module.exports = {
     res
   ) => {
     try {
-      if (!profileEmail || !phone || !sns || !jobBig || !jobSmall || !skillBig || !skillSmall || !introduce) {
-        console.log('필요값 누락');
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      if(!profileEmail) {
+        profileEmail = "";
       }
-
+      if(!phone) {
+        phone = "";
+      }
+      if(!sns) {
+        sns = "";
+      }
+      if(!jobBig) {
+        jobBig = "";
+      }
+      if(!jobSmall) {
+        jobSmall = "";
+      }
+      if(!skillBig) {
+        skillBig = "";
+      }
+      if(!skillSmall) {
+        skillSmall = "";
+      }
+      if(!introduce) {
+        introduce = "";
+      }
+      // if (!profileEmail || !phone || !sns || !jobBig || !jobSmall || !skillBig || !skillSmall || !introduce) {
+      //   console.log('필요값 누락');
+      //   return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      // }
       transaction = await sequelize.transaction();
       const updatedMyPage = await userMethod.updateMyPage(
         UserId,
