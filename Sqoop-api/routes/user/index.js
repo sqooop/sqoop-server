@@ -12,6 +12,7 @@ router.post('/resetPassword', userController.resetPassword);
 
 
 router.get('/getUserSetting', auth.checkToken, userController.getUserSetting);
+router.get('/checkPassword', auth.checkToken, userController.checkPassword);
 router.post('/changePassword', auth.checkToken, userController.changePassword);
 router.post('/setMarketing', auth.checkToken, userController.setMarketing);
 router.post('/deleteAccount', auth.checkToken, userController.deleteAccount);

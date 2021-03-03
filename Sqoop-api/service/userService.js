@@ -174,6 +174,25 @@ module.exports = {
             return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.GET_USER_SET_FAIL));
         }
     },
+    checkPassword: async (userId, password, res) => {
+        if (!password) {
+            console.log('필요값 누락');
+            return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+        }
+        try {
+            const user = await userMethod.getUserPW(userId);
+            const inputPassword = await crypto.pbkdf2Sync(password, user.salt, 10000, 64, 'sha512').toString('base64');
+            if (user.password != inputPassword) {
+                console.log('비밀번호가 일치하지 않습니다.');
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.MISS_MATCH_PW));
+            } else {
+                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PW_CHECK_SUCCESS));
+            }
+        } catch (err) {
+            console.log(err);
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.EMAIL_CHECK_FAIL));
+        }
+    },
     changePassword: async (userId, inputPW, newPW, res) => {
         if (!inputPW || !newPW) {
             console.log('필요값 누락');
