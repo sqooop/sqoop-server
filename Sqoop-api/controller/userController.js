@@ -38,6 +38,12 @@ module.exports = {
         const getUserSetting = await userService.getUserSetting(userId, res);
         return getUserSetting;
     },
+    checkPassword: async (req, res) => {
+        const userId = req.decoded.id;
+        const { password } = req.query;
+        const checkPassword = await userService.checkPassword(userId, password, res);
+        return checkPassword;
+    },
     changePassword: async (req, res) => {
         const userId = req.decoded.id;
         const { inputPW, newPW } = req.body;
