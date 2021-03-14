@@ -190,7 +190,7 @@ module.exports = {
             }
         } catch (err) {
             console.log(err);
-            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.EMAIL_CHECK_FAIL));
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.PW_CHECK_FAIL));
         }
     },
     changePassword: async (userId, inputPW, newPW, res) => {
