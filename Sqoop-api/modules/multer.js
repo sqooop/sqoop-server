@@ -1,13 +1,14 @@
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
+const myBucket = require('./myBucket').bucket;
 aws.config.loadFromPath(__dirname + '/../config/s3.json');
 
 const s3 = new aws.S3();
 const upload = multer({
     storage: multerS3({
         s3,
-        bucket: 'sopt-27-osj',
+        bucket: myBucket,
         acl: 'public-read',
         contentType: multerS3.AUTO_CONTENT_TYPE, // 이렇게하면 다운로드가 그냥 창이 뜨게!
         key: function (req, file, cb) {

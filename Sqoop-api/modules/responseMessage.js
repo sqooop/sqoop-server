@@ -44,6 +44,7 @@ module.exports = {
   SET_MARKETING_SUCCESS: "마케팅 수신 설정 성공",
   SET_MARKETING_FAIL: "마케팅 수신 설정 실패",
   PW_CHECK_SUCCESS: "비밀번호 일치",
+  PW_CHECK_FAIL: "비밀번호 체크 실패", 
   CHANGE_PW_SUCCESS: "비밀번호 변경 성공",
   CHANGE_PW_FAIL: "비밀번호 변경 실패",
   GET_USER_SET_SUCCESS: "유저 계정 설정 조회 성공",
