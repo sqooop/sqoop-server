@@ -2,12 +2,13 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const {
   sequelize
 } = require('./models');
 const cors = require('cors');
 
-sequelize.sync({ })
+sequelize.sync({})
   .then(() => {
     console.log('데이터베이스 연결 성공.');
   })
@@ -26,6 +27,24 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(logger(":method"), function (req, res, next) {
+  next();
+});
+
+app.use(logger(":url"), function (req, res, next) {
+  next();
+});
+app.use(logger(":status"), function (req, res, next) {
+  next();
+});
+app.use(logger(":response-time"), function (req, res, next) {
+  next();
+});
+
+
+
+
 
 app.use('/', indexRouter);
 

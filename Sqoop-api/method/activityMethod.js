@@ -214,14 +214,20 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.and]: [{
+          [Op.or]: [{
             startDate: {
               [Op.gte]: startDate
+            },
+            startDate: {
+              [Op.lte]: endDate
             }
           },
           {
             endDate: {
               [Op.lte]: endDate
+            },
+            endDate: {
+              [Op.gte]: startDate
             }
           },
           ]
@@ -264,14 +270,20 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.and]: [{
+          [Op.or]: [{
             startDate: {
               [Op.gte]: startDate
+            },
+            startDate: {
+              [Op.lte]: endDate
             }
           },
           {
             endDate: {
               [Op.lte]: endDate
+            },
+            endDate: {
+              [Op.gte]: startDate
             }
           },
           ]
@@ -290,14 +302,20 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.and]: [{
+          [Op.or]: [{
             startDate: {
               [Op.gte]: startDate
+            },
+            startDate: {
+              [Op.lte]: endDate
             }
           },
           {
             endDate: {
               [Op.lte]: endDate
+            },
+            endDate: {
+              [Op.gte]: startDate
             }
           },
           ]
@@ -329,14 +347,20 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.and]: [{
+          [Op.or]: [{
             startDate: {
               [Op.gte]: startDate
+            },
+            startDate: {
+              [Op.lte]: endDate
             }
           },
           {
             endDate: {
               [Op.lte]: endDate
+            },
+            endDate: {
+              [Op.gte]: startDate
             }
           },
           ]

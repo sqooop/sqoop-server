@@ -84,7 +84,7 @@ module.exports = {
                 console.log('존재하지 않는 이메일');
                 return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_EMAIL));
             }
-            const { gMail, gPassword } = require('../config/gmail.json');
+            const { gMail, gPassword, html } = require('../config/gmail.json');
             const smtpTransport = nodeMailer.createTransport({
                 service: "Gmail",
                 auth: {
@@ -97,12 +97,17 @@ module.exports = {
             });
 
             const temporaryPw = Math.random().toString(36).slice(2);
-
             let mailOptions = {
                 from: gMail,
                 to: userEmail,
                 subject: "Sqoop 임시 비밀번호 입니다",
-                text: temporaryPw
+                // text: temporaryPw,
+                attachments: [{
+                    filename: 'sqoop.jpg',
+                    path: 'https://upload.wikimedia.org/wikipedia/commons/3/31/Ice_Cream_dessert_02.jpg',
+                    cid: 'sqoop_cid'
+                }],
+                html: `<a>${temporaryPw}</a><br>` + html
             };
 
             const salt = crypto.randomBytes(64).toString('base64');
