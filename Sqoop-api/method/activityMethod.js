@@ -215,22 +215,26 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.or]: [{
-            startDate: {
-              [Op.gte]: startDate
-            },
-            startDate: {
-              [Op.lte]: endDate
-            }
+            [Op.and]: [{
+              startDate: {
+                [Op.gte]: startDate
+              },
+              startDate: {
+                [Op.lte]: endDate
+              }
+            }]
           },
           {
-            endDate: {
-              [Op.lte]: endDate
-            },
-            endDate: {
-              [Op.gte]: startDate
-            }
-          },
-          ]
+            [Op.and]: [{
+              endDate: {
+                [Op.lte]: endDate
+              },
+              endDate: {
+                [Op.gte]: startDate
+              }
+
+            }]
+          }]
         },
         attributes: ['id'],
         include: [{
@@ -271,22 +275,26 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.or]: [{
-            startDate: {
-              [Op.gte]: startDate
-            },
-            startDate: {
-              [Op.lte]: endDate
-            }
+            [Op.and]: [{
+              startDate: {
+                [Op.gte]: startDate
+              },
+              startDate: {
+                [Op.lte]: endDate
+              }
+            }]
           },
           {
-            endDate: {
-              [Op.lte]: endDate
-            },
-            endDate: {
-              [Op.gte]: startDate
-            }
-          },
-          ]
+            [Op.and]: [{
+              endDate: {
+                [Op.lte]: endDate
+              },
+              endDate: {
+                [Op.gte]: startDate
+              }
+
+            }]
+          }]
         },
         attributes: ['id']
       });
@@ -303,22 +311,26 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.or]: [{
-            startDate: {
-              [Op.gte]: startDate
-            },
-            startDate: {
-              [Op.lte]: endDate
-            }
+            [Op.and]: [{
+              startDate: {
+                [Op.gte]: startDate
+              },
+              startDate: {
+                [Op.lte]: endDate
+              }
+            }]
           },
           {
-            endDate: {
-              [Op.lte]: endDate
-            },
-            endDate: {
-              [Op.gte]: startDate
-            }
-          },
-          ]
+            [Op.and]: [{
+              endDate: {
+                [Op.lte]: endDate
+              },
+              endDate: {
+                [Op.gte]: startDate
+              }
+
+            }]
+          }]
         },
         attributes: ['id'],
         include: [{
@@ -348,22 +360,26 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.or]: [{
-            startDate: {
-              [Op.gte]: startDate
-            },
-            startDate: {
-              [Op.lte]: endDate
-            }
+            [Op.and]: [{
+              startDate: {
+                [Op.gte]: startDate
+              },
+              startDate: {
+                [Op.lte]: endDate
+              }
+            }]
           },
           {
-            endDate: {
-              [Op.lte]: endDate
-            },
-            endDate: {
-              [Op.gte]: startDate
-            }
-          },
-          ]
+            [Op.and]: [{
+              endDate: {
+                [Op.lte]: endDate
+              },
+              endDate: {
+                [Op.gte]: startDate
+              }
+
+            }]
+          }]
         },
         attributes: ['id'],
         include: [{
