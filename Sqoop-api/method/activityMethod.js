@@ -228,17 +228,27 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.and]: [{
+          [Op.or]: [{
+            [Op.and]: [{
               startDate: {
                 [Op.gte]: startDate
-              }
-            },
-            {
-              endDate: {
+              },
+              startDate: {
                 [Op.lte]: endDate
               }
-            },
-          ]
+            }]
+          },
+          {
+            [Op.and]: [{
+              endDate: {
+                [Op.lte]: endDate
+              },
+              endDate: {
+                [Op.gte]: startDate
+              }
+
+            }]
+          }]
         },
         attributes: ['id'],
         include: [{
@@ -278,17 +288,27 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.and]: [{
+          [Op.or]: [{
+            [Op.and]: [{
               startDate: {
                 [Op.gte]: startDate
-              }
-            },
-            {
-              endDate: {
+              },
+              startDate: {
                 [Op.lte]: endDate
               }
-            },
-          ]
+            }]
+          },
+          {
+            [Op.and]: [{
+              endDate: {
+                [Op.lte]: endDate
+              },
+              endDate: {
+                [Op.gte]: startDate
+              }
+
+            }]
+          }]
         },
         attributes: ['id']
       });
@@ -304,17 +324,27 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.and]: [{
+          [Op.or]: [{
+            [Op.and]: [{
               startDate: {
                 [Op.gte]: startDate
-              }
-            },
-            {
-              endDate: {
+              },
+              startDate: {
                 [Op.lte]: endDate
               }
-            },
-          ]
+            }]
+          },
+          {
+            [Op.and]: [{
+              endDate: {
+                [Op.lte]: endDate
+              },
+              endDate: {
+                [Op.gte]: startDate
+              }
+
+            }]
+          }]
         },
         attributes: ['id'],
         include: [{
@@ -343,17 +373,27 @@ module.exports = {
       const preRangeActivity = await Activity.findAll({
         where: {
           UserId: userId,
-          [Op.and]: [{
+          [Op.or]: [{
+            [Op.and]: [{
               startDate: {
                 [Op.gte]: startDate
-              }
-            },
-            {
-              endDate: {
+              },
+              startDate: {
                 [Op.lte]: endDate
               }
-            },
-          ]
+            }]
+          },
+          {
+            [Op.and]: [{
+              endDate: {
+                [Op.lte]: endDate
+              },
+              endDate: {
+                [Op.gte]: startDate
+              }
+
+            }]
+          }]
         },
         attributes: ['id'],
         include: [{
