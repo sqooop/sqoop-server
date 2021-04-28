@@ -69,6 +69,10 @@ module.exports = {
       fileName = req.files['fileUrl'][0].originalname;
     }
 
+    console.log("imgUrl : " + imageUrl);
+    console.log("fileUrl : " + fileUrl);
+    console.log("fileName : " + fileName);
+
     const updatedActivity = await activityService.updateActivity(
       title,
       startDate,

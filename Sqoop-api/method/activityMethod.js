@@ -50,61 +50,75 @@ module.exports = {
   ) => {
     try {
       let updatedActivity;
-      if (imageUrl == "" && fileUrl == "") {
-        updatedActivity = await Activity.update({
-          title,
-          startDate,
-          endDate,
-          group,
-          summary,
-        }, {
-          where: {
-            id: ActivityId
-          }
-        });
-      } else if (imageUrl == "") {
-        updatedActivity = await Activity.update({
-          title,
-          startDate,
-          endDate,
-          group,
-          summary,
-          fileUrl,
-          fileName,
-        }, {
-          where: {
-            id: ActivityId
-          }
-        });
-      } else if (fileUrl == "") {
-        updatedActivity = await Activity.update({
-          title,
-          startDate,
-          endDate,
-          group,
-          summary,
-          imageUrl,
-        }, {
-          where: {
-            id: ActivityId
-          }
-        });
-      } else {
-        updatedActivity = await Activity.update({
-          title,
-          startDate,
-          endDate,
-          group,
-          summary,
-          imageUrl,
-          fileUrl,
-          fileName,
-        }, {
-          where: {
-            id: ActivityId
-          }
-        });
-      }
+      updatedActivity = await Activity.update({
+        title,
+        startDate,
+        endDate,
+        group,
+        summary,
+        imageUrl,
+        fileUrl,
+        fileName,
+      }, {
+        where: {
+          id: ActivityId
+        }
+      });
+      // if (imageUrl == "" && fileUrl == "") {
+      //   updatedActivity = await Activity.update({
+      //     title,
+      //     startDate,
+      //     endDate,
+      //     group,
+      //     summary,
+      //   }, {
+      //     where: {
+      //       id: ActivityId
+      //     }
+      //   });
+      // } else if (imageUrl == "") {
+      //   updatedActivity = await Activity.update({
+      //     title,
+      //     startDate,
+      //     endDate,
+      //     group,
+      //     summary,
+      //     fileUrl,
+      //     fileName,
+      //   }, {
+      //     where: {
+      //       id: ActivityId
+      //     }
+      //   });
+      // } else if (fileUrl == "") {
+      //   updatedActivity = await Activity.update({
+      //     title,
+      //     startDate,
+      //     endDate,
+      //     group,
+      //     summary,
+      //     imageUrl,
+      //   }, {
+      //     where: {
+      //       id: ActivityId
+      //     }
+      //   });
+      // } else {
+      //   updatedActivity = await Activity.update({
+      //     title,
+      //     startDate,
+      //     endDate,
+      //     group,
+      //     summary,
+      //     imageUrl,
+      //     fileUrl,
+      //     fileName,
+      //   }, {
+      //     where: {
+      //       id: ActivityId
+      //     }
+      //   });
+      // }
 
       return "활동 정보 수정 완료";
     } catch (err) {
@@ -241,23 +255,23 @@ module.exports = {
           model: Hashtag,
           where: {
             [Op.or]: [{
-              [Op.and]: [{
-                isJob: 1
-              }, {
-                content: {
-                  [Op.in]: jobTag
-                }
-              }]
-            },
-            {
-              [Op.and]: [{
-                isJob: 0
-              }, {
-                content: {
-                  [Op.in]: skillTag
-                }
-              }]
-            }
+                [Op.and]: [{
+                  isJob: 1
+                }, {
+                  content: {
+                    [Op.in]: jobTag
+                  }
+                }]
+              },
+              {
+                [Op.and]: [{
+                  isJob: 0
+                }, {
+                  content: {
+                    [Op.in]: skillTag
+                  }
+                }]
+              }
             ]
           }
         }]
@@ -470,23 +484,23 @@ module.exports = {
           model: Hashtag,
           where: {
             [Op.or]: [{
-              [Op.and]: [{
-                isJob: 1
-              }, {
-                content: {
-                  [Op.in]: jobTag
-                }
-              }]
-            },
-            {
-              [Op.and]: [{
-                isJob: 0
-              }, {
-                content: {
-                  [Op.in]: skillTag
-                }
-              }]
-            }
+                [Op.and]: [{
+                  isJob: 1
+                }, {
+                  content: {
+                    [Op.in]: jobTag
+                  }
+                }]
+              },
+              {
+                [Op.and]: [{
+                  isJob: 0
+                }, {
+                  content: {
+                    [Op.in]: skillTag
+                  }
+                }]
+              }
             ]
           }
         }]
@@ -544,15 +558,15 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.and]: [{
-            startDate: {
-              [Op.lte]: startDateComparement
-            }
-          },
-          {
-            endDate: {
-              [Op.gte]: endDateComparement
-            }
-          },
+              startDate: {
+                [Op.lte]: startDateComparement
+              }
+            },
+            {
+              endDate: {
+                [Op.gte]: endDateComparement
+              }
+            },
           ]
         },
         attributes: [
