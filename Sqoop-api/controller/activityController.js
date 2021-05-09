@@ -54,24 +54,33 @@ module.exports = {
       skillTag,
       contents,
       questions,
-      ActivityId
+      ActivityId,
+      imageUrl,
+      fileUrl
     } = req.body;
 
-    let imageUrl = "";
-    let fileUrl = "";
-    let fileName = "";
+    let imgUrl = "";
+    let fUrl = "";
+    let fName = "";
 
     if (req.files ? req.files['imageUrl'] : false) {
-      imageUrl = req.files['imageUrl'][0].location;
+      imgUrl = req.files['imageUrl'][0].location;
     }
     if (req.files ? req.files['fileUrl'] : false) {
-      fileUrl = req.files['fileUrl'][0].location;
-      fileName = req.files['fileUrl'][0].originalname;
+      fUrl = req.files['fileUrl'][0].location;
+      fName = req.files['fileUrl'][0].originalname;
     }
 
-    console.log("imgUrl : " + imageUrl);
-    console.log("fileUrl : " + fileUrl);
-    console.log("fileName : " + fileName);
+    if(imageUrl) {
+      imgUrl = imageUrl;
+    }
+    if(fileUrl) {
+      fUrl = fileUrl;
+    }
+
+    console.log("imgUrl : " + imgUrl);
+    console.log("fileUrl : " + fUrl);
+    console.log("fileName : " + fName);
 
     const updatedActivity = await activityService.updateActivity(
       title,
@@ -81,9 +90,9 @@ module.exports = {
       summary,
       jobTag,
       skillTag,
-      imageUrl,
-      fileUrl,
-      fileName,
+      imgUrl,
+      fUrl,
+      fName,
       ActivityId,
       questions,
       contents,
