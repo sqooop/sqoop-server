@@ -90,6 +90,10 @@ module.exports = {
       group = "";
     }
     try {
+      if(fileUrl && !fileName) {
+        const activity = await activityMethod.getActivity(ActivityId);
+        fileName = activity.fileName;
+      }
       const updatedActivity = await activityMethod.updateActivity(
         title,
         startDate,
