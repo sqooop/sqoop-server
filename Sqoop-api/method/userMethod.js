@@ -103,8 +103,7 @@ module.exports = {
         jobSmall,
         skillBig,
         skillSmall,
-        introduce,
-        transaction) => {
+        introduce) => {
         try {
             await User.update({
                 profileEmail,
@@ -119,8 +118,7 @@ module.exports = {
             }, {
                 where: {
                     id: UserId
-                },
-                transaction
+                }
             });
 
             return "마이페이지 수정 완료";

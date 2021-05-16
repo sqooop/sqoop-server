@@ -6,13 +6,12 @@ const {
 let transaction;
 
 module.exports = {
-  deleteAllEducation: async (UserId, transaction) => {
+  deleteAllEducation: async (UserId) => {
     try {
       await Education.destroy({
         where: {
           UserId
-        },
-        transaction
+        }
       });
 
       return "학력 삭제 완료";
@@ -20,13 +19,11 @@ module.exports = {
       throw err;
     }
   },
-  updateEducation: async (education, transaction) => {
+  updateEducation: async (education) => {
     try {
       let educationArr;
       if (education) {
-        educationArr = await Education.bulkCreate(education, {
-          transaction
-        });
+        educationArr = await Education.bulkCreate(education);
       }
       return "학력 수정 완료";
     } catch (err) {

@@ -86,7 +86,6 @@ module.exports = {
       //   console.log('필요값 누락');
       //   return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       // }
-      transaction = await sequelize.transaction();
       const updatedMyPage = await userMethod.updateMyPage(
         UserId,
         profileEmail,
@@ -97,11 +96,10 @@ module.exports = {
         jobSmall,
         skillBig,
         skillSmall,
-        introduce,
-        transaction
+        introduce
       );
 
-      const deletedAllEducation = await educationMethod.deleteAllEducation(UserId, transaction);
+      const deletedAllEducation = await educationMethod.deleteAllEducation(UserId);
       console.log(deletedAllEducation);
 
       if (education) {
@@ -109,10 +107,10 @@ module.exports = {
           education[idx].UserId = UserId;
         }
       }
-      const updatedEducation = await educationMethod.updateEducation(education, transaction);
+      const updatedEducation = await educationMethod.updateEducation(education);
       console.log(updatedEducation);
 
-      const deletedAllHistory = await historyMethod.deleteAllHistory(UserId, transaction);
+      const deletedAllHistory = await historyMethod.deleteAllHistory(UserId);
       console.log(deletedAllHistory);
 
       if (langHistory) {
@@ -127,7 +125,7 @@ module.exports = {
           langHistory[idx].type = 1;
         }
       }
-      const updatedLangHistory = await historyMethod.updateLangHistory(langHistory, transaction);
+      const updatedLangHistory = await historyMethod.updateLangHistory(langHistory);
       console.log(updatedLangHistory);
 
       if (certificateHistory) {
@@ -142,7 +140,7 @@ module.exports = {
           certificateHistory[idx].type = 2;
         }
       }
-      const updatedCertificateHistory = await historyMethod.updateCertificateHistory(certificateHistory, transaction);
+      const updatedCertificateHistory = await historyMethod.updateCertificateHistory(certificateHistory);
       console.log(updatedCertificateHistory);
 
       if (awardHistory) {
@@ -157,15 +155,13 @@ module.exports = {
           awardHistory[idx].type = 3;
         }
       }
-      const updatedAwardHistory = await historyMethod.updateAwardHistory(awardHistory, transaction);
+      const updatedAwardHistory = await historyMethod.updateAwardHistory(awardHistory);
       console.log(updatedAwardHistory);
 
-      await transaction.commit();
 
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.UPDATE_MY_PAGE_SUCCESS, updatedMyPage));
     } catch (err) {
       console.error(err);
-      if (transaction) await transaction.rollback();
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.UPDATE_MY_PAGE_FAIL));
     }
   },
