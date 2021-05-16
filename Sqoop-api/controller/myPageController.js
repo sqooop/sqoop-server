@@ -19,20 +19,25 @@ module.exports = {
       education,
       langHistory,
       certificateHistory,
-      awardHistory
+      awardHistory,
+      profileImg
     } = req.body;
 
     const UserId = req.decoded.id;
-    let profileImg = "";
+    let imgUrl = "";
 
     if (req.file ? req.file : false) {
-      profileImg = req.file.location;
+      imgUrl = req.file.location;
+    }
+
+    if(profileImg) {
+      imgUrl = profileImg;
     }
 
     const updatedMyPage = await myPageService.updateMyPage(
       UserId,
       profileEmail,
-      profileImg,
+      imgUrl,
       phone,
       sns,
       jobBig,
