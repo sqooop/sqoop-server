@@ -90,7 +90,7 @@ module.exports = {
       group = "";
     }
     try {
-      if(fileUrl && !fileName) {
+      if (fileUrl && !fileName) {
         const activity = await activityMethod.getActivity(ActivityId);
         fileName = activity.fileName;
       }
@@ -305,8 +305,7 @@ module.exports = {
       }
 
 
-      let preRangeActivity = rawPreRangeActivity.map(data => data.get({ plain: true }))
-      const rangeActivityId = preRangeActivity.map(activity => {
+      const rangeActivityId = rawPreRangeActivity.map(activity => {
         return activity.id;
       })
       const rawRangeActivity = await activityMethod.getRangeActivity(rangeActivityId);

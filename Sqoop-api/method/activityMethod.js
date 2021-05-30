@@ -2,8 +2,8 @@ const {
   Activity,
   Hashtag
 } = require('../models');
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
+const db = require('../models/index');
+const Op = db.Sequelize.Op;
 
 module.exports = {
   createActivity: async (
@@ -229,25 +229,10 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.or]: [{
-            [Op.and]: [{
-              startDate: {
-                [Op.gte]: startDate
-              },
-              startDate: {
-                [Op.lte]: endDate
-              }
-            }]
+            startDate: { [Op.between]: [startDate, endDate] }
           },
           {
-            [Op.and]: [{
-              endDate: {
-                [Op.lte]: endDate
-              },
-              endDate: {
-                [Op.gte]: startDate
-              }
-
-            }]
+            endDate: { [Op.between]: [startDate, endDate] }
           }]
         },
         attributes: ['id'],
@@ -255,23 +240,23 @@ module.exports = {
           model: Hashtag,
           where: {
             [Op.or]: [{
-                [Op.and]: [{
-                  isJob: 1
-                }, {
-                  content: {
-                    [Op.in]: jobTag
-                  }
-                }]
-              },
-              {
-                [Op.and]: [{
-                  isJob: 0
-                }, {
-                  content: {
-                    [Op.in]: skillTag
-                  }
-                }]
-              }
+              [Op.and]: [{
+                isJob: 1
+              }, {
+                content: {
+                  [Op.in]: jobTag
+                }
+              }]
+            },
+            {
+              [Op.and]: [{
+                isJob: 0
+              }, {
+                content: {
+                  [Op.in]: skillTag
+                }
+              }]
+            }
             ]
           }
         }]
@@ -287,27 +272,13 @@ module.exports = {
 
       const preRangeActivity = await Activity.findAll({
         where: {
+
           UserId: userId,
           [Op.or]: [{
-            [Op.and]: [{
-              startDate: {
-                [Op.gte]: startDate
-              },
-              startDate: {
-                [Op.lte]: endDate
-              }
-            }]
+            startDate: { [Op.between]: [startDate, endDate] }
           },
           {
-            [Op.and]: [{
-              endDate: {
-                [Op.lte]: endDate
-              },
-              endDate: {
-                [Op.gte]: startDate
-              }
-
-            }]
+            endDate: { [Op.between]: [startDate, endDate] }
           }]
         },
         attributes: ['id']
@@ -325,25 +296,10 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.or]: [{
-            [Op.and]: [{
-              startDate: {
-                [Op.gte]: startDate
-              },
-              startDate: {
-                [Op.lte]: endDate
-              }
-            }]
+            startDate: { [Op.between]: [startDate, endDate] }
           },
           {
-            [Op.and]: [{
-              endDate: {
-                [Op.lte]: endDate
-              },
-              endDate: {
-                [Op.gte]: startDate
-              }
-
-            }]
+            endDate: { [Op.between]: [startDate, endDate] }
           }]
         },
         attributes: ['id'],
@@ -374,25 +330,10 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.or]: [{
-            [Op.and]: [{
-              startDate: {
-                [Op.gte]: startDate
-              },
-              startDate: {
-                [Op.lte]: endDate
-              }
-            }]
+            startDate: { [Op.between]: [startDate, endDate] }
           },
           {
-            [Op.and]: [{
-              endDate: {
-                [Op.lte]: endDate
-              },
-              endDate: {
-                [Op.gte]: startDate
-              }
-
-            }]
+            endDate: { [Op.between]: [startDate, endDate] }
           }]
         },
         attributes: ['id'],
@@ -484,23 +425,23 @@ module.exports = {
           model: Hashtag,
           where: {
             [Op.or]: [{
-                [Op.and]: [{
-                  isJob: 1
-                }, {
-                  content: {
-                    [Op.in]: jobTag
-                  }
-                }]
-              },
-              {
-                [Op.and]: [{
-                  isJob: 0
-                }, {
-                  content: {
-                    [Op.in]: skillTag
-                  }
-                }]
-              }
+              [Op.and]: [{
+                isJob: 1
+              }, {
+                content: {
+                  [Op.in]: jobTag
+                }
+              }]
+            },
+            {
+              [Op.and]: [{
+                isJob: 0
+              }, {
+                content: {
+                  [Op.in]: skillTag
+                }
+              }]
+            }
             ]
           }
         }]
@@ -558,15 +499,15 @@ module.exports = {
         where: {
           UserId: userId,
           [Op.and]: [{
-              startDate: {
-                [Op.lte]: startDateComparement
-              }
-            },
-            {
-              endDate: {
-                [Op.gte]: endDateComparement
-              }
-            },
+            startDate: {
+              [Op.lte]: startDateComparement
+            }
+          },
+          {
+            endDate: {
+              [Op.gte]: endDateComparement
+            }
+          },
           ]
         },
         attributes: [
